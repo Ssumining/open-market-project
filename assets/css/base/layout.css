@@ -1,5 +1,9 @@
 /*공통 구조 정의*/
 
+html {
+    font-size: 62.5%; /* 1rem = 10px로 계산하기 편하게 설정 */
+}
+
 /*전역 레이아웃*/
 body{
     /* layout context */
@@ -8,6 +12,7 @@ body{
     flex-direction: column;
     min-height: 100vh; /*푸터를 바닥으로*/
     background-color: var(--color-bg-base);
+    color: var(--color-text-base);
     font-family: var(--font-base);
 }
 
@@ -21,9 +26,7 @@ body{
 }
 
 /*구역별*/
-
 header {
-    width: 100%;
     background-color: var(--color-bg-base);
     border-bottom: 1px solid var(--color-bg-secondary);
     padding: 2.2rem 0;
@@ -35,17 +38,55 @@ header {
     justify-content: space-between; /*요소 분산*/
 }
 
+.logo img {
+    width: 12.4rem;
+    height: 3.8rem;
+    display: block;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    width: 40.0rem;
+    height: 4.6rem;
+    padding: 0 2.2rem;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-base);
+}
+
+.search-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: var(--fs-sm);
+    background: none;
+}
+
+.user-menu ul {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.user-menu a {
+    text-decoration: none;
+    color: var(--color-text-muted);
+    font-size: var(--fs-xs);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--icon-gap-sm);
+}
+
 /*본문*/
 .main-content {
     flex: 1; /*본문이 화면 공간 차지, 푸터 위치 잡기*/
-    width: 100%;
     padding-top: var(--space-lg);
     padding-bottom: var(--space-xl);
 }
 
 /*배너*/
 .main-visual {
-    width: 100%;
     height: 50.0rem;
     background-color: var(--color-bg-secondary);
     display: flex;
@@ -60,8 +101,44 @@ header {
     padding: var(--space-xl) 0;
 }
 
-.footer {
+.product-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.product-img {
     width: 100%;
+    aspect-ratio: 1 / 1; /* 정사각형 유지 */
+    overflow: hidden;
+    border-radius: var(--radius-md); /* 1.8rem */
+    border: 1px solid var(--color-bg-secondary);
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info .seller {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+}
+
+.product-info .product-name {
+    font-size: var(--fs-md);
+    margin: 0.5rem 0;
+    line-height: 1.4;
+    color: var(--color-text-base);
+}
+
+.product-info .price {
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-bold);
+}
+
+.footer {
     background-color: var(--color-bg-secondary);
     padding: 6.0rem 0;
 }
