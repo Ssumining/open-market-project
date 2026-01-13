@@ -25,7 +25,6 @@ body{
     box-sizing: border-box;
 }
 
-/*구역별*/
 header {
     background-color: var(--color-bg-base);
     border-bottom: 1px solid var(--color-bg-secondary);
@@ -38,10 +37,17 @@ header {
     justify-content: space-between; /*요소 분산*/
 }
 
+/*로고&검색*/
 .logo img {
     width: 12.4rem;
     height: 3.8rem;
     display: block;
+}
+
+.logo-search-group {
+    display: flex;
+    align-items: center;
+    gap: 3.0rem;
 }
 
 .search-form {
@@ -60,14 +66,28 @@ header {
     border: none;
     outline: none;
     font-size: var(--fs-sm);
-    background: none;
 }
 
+.btn-search {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/*돋보기 크기*/
+.btn-search img {
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
+}
+
+/*메뉴 간격*/
 .user-menu ul {
     display: flex;
     gap: var(--space-md);
 }
 
+/*아이콘 텍스트 사이 간격*/
 .user-menu a {
     text-decoration: none;
     color: var(--color-text-muted);
@@ -76,6 +96,12 @@ header {
     flex-direction: column;
     align-items: center;
     gap: var(--icon-gap-sm);
+}
+
+/*상단 아이콘 크기*/
+.user-menu .icon {
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
 }
 
 /*본문*/
@@ -87,13 +113,61 @@ header {
 
 /*배너*/
 .main-visual {
-    height: 50.0rem;
+    position: relative;
+    width: 100%;
+    height: 50.0rem; 
     background-color: var(--color-bg-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 }
 
+.btn-prev, .btn-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6.0rem;
+    height: 12.4rem;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.btn-prev {
+    left: 0;
+    background-image: var(--icon-swiper-1);
+}
+
+.btn-next {
+    right: 0;
+    background-image: var(--icon-swiper-2);
+}
+
+.pagination {
+    position: absolute;
+    bottom: var(--radius-md);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--icon-gap-md);
+    z-index: 10;
+}
+
+.pagination li {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background-color: var(--color-bg-base);
+    cursor: pointer;
+}
+
+/* 활성화된 페이지 점 스타일 */
+.pagination li.on {
+    background-color: var(--color-text-base); /* 활성화된 점은 검은색 */
+}
+
+/*상품*/
 .product-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /*3 열 구조*/
