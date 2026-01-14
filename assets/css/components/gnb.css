@@ -1,0 +1,148 @@
+/* 안 되면 다시 여기로 button, input 추가 (reset code) */
+
+.gnb-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: var(--space-md) auto;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.search-input {
+    font-family: var(--font-base);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-md);
+}
+
+.user-menu {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.btn-txt {
+    font-family: var(--font-base);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.cart-btn,
+.login-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: var(--font-base);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+
+    gap: var(--icon-gap-sm);
+    transition: color 0.1s ease;
+}
+
+.cart-btn::before, 
+.login-btn::before {
+    content: "";
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
+
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.cart-btn:hover, 
+.login-btn:hover {
+    color: var(--color-primary);
+}
+
+.cart-btn::before { background-image: var(--icon-cart); } 
+.cart-btn:hover::before { background-image: var(--icon-cart-2); }
+
+.login-btn::before { background-image: var(--icon-user); }
+.login-btn:hover::before { background-image: var(--icon-user-2); }
+
+.dropdown-container {
+    position: relative; 
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown-menu {
+    display: none;      
+    position: absolute; 
+    top: 100%;          
+    margin-top: var(--space-sm); 
+    
+    width: 13.0rem;
+    height: auto;
+    padding: var(--space-sm);
+
+    background-color: var(--color-bg-base);
+    border: 1px solid var(--color-bg-secondary); /* 변경: 연한 테두리 변수 */
+    border-radius: var(--radius-sm);
+    filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.1));
+    z-index: 10;     
+}
+
+.dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -0.6rem;
+    left: 50%;
+    
+    /* 정사각형 생성 */
+    width: var(--fs-xs); 
+    height: var(--fs-xs); 
+    background-color: var(--color-bg-base);
+    
+    /* 왼쪽과 위쪽만 테두리를 줌 */
+    border-top: 1px solid var(--color-bg-secondary);
+    border-left: 1px solid var(--color-bg-secondary);
+    
+    /* 45도 회전시키고 모서리를 둥글게 함 */
+    transform: translateX(-50%) rotate(45deg);
+    border-top-left-radius: 0.4rem; /* 여기가 삼각형 꼭짓점이 됨 */
+    
+    z-index: 1;
+}
+
+/* 활성화 상태 */
+.dropdown-menu.show {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    width: 13.0rem;
+    height: auto;
+    padding: 1.0rem; 
+
+    font-family: var(--font-base);
+    font-weight: var(--fw-medium); /* 500 반영 */
+    font-size: var(--fs-md);
+
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-base);
+    transition: all 0.1s ease;
+}
+
+.menu-item:active,
+.menu-item:hover {
+    color: var(--color-text-base);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-text-muted);
+}
