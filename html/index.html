@@ -10,14 +10,13 @@
     <link rel="stylesheet" href="../assets/css/base/layout.css">
 </head>
 <body>
+    /*로고 클릭시 홈으로*/
     <header class="header">
-        <div class="container">
-            <div class="logo-search-group">
-            <h1 class="logo">
+            <h1 class="logo-home">
                 <a href="./index.html"><img src="../assets/images/Logo-hodu.png" alt="HODU"></a>
             </h1>
             
-            <section class="search-area">
+            <section class="search">
                 <h2 class="ir">상품 검색</h2>
                 <form action="#" class="search-form">
                     <label for="main-search" class="ir">검색어 입력</label>
@@ -29,7 +28,7 @@
             </section>
         </div>
 
-            <nav class="user-menu">
+            <section class="user-menu">
                 <h2 class="ir">사용자 메뉴</h2>
                 <ul>
                     <li><a href="#" class="link-cart">
@@ -40,26 +39,28 @@
                             <img src="../assets/images/icon-user.svg" alt="" class="icon">
                             <span>로그인</span></a></li>
                 </ul>
-            </nav>
+            </section>
         </div>
     </header>
 
     <main class="main-content">
-        <section class="main-visual">
+        <section class="promotion">
             <h2 class="ir">메인 프로모션 배너</h2>
 
-            <div class="slider-list">
+            <section class="slider-list">
                 <article class="visual-banner">
                     <h3 class="ir">첫 번째 프로모션 배너 내용</h3>
                 </article>
-            </div>
+            </section>
 
-            <button type="button" class="btn-prev">
-        <span class="ir">이전 배너 보기</span>
-    </button>
-    <button type="button" class="btn-next">
-        <span class="ir">다음 배너 보기</span>
-    </button>
+            <section class = "slider-controls">
+                <button type="button" class="btn-prev">
+            <span class="ir">이전 배너 보기</span>
+        </button>
+        <button type="button" class="btn-next">
+            <span class="ir">다음 배너 보기</span>
+        </button>
+            </section>
 
     <ul class="pagination">
         <li class="on"><span class="ir">1번 배너</span></li>
@@ -70,7 +71,7 @@
     </ul>
         </section>
 
-    <section class="product-section">
+    <section class="product-item">
         <div class="container">
             <h2 class="ir">전체 판매 상품 목록</h2>
             <ul class="product-list">
