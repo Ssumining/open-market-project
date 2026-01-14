@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>signup</title>
+    <link rel="stylesheet" href="../assests/css/base/variables.css">
+    <link rel="stylesheet" href="../assests/css/base/reset.css">
+    <link rel="stylesheet" href="../assests/css/base/components.css">
+    <link rel="stylesheet" href="../assests/css/base/layout.css">
+  </head>
+  <body>
+    <header class="header-signup">
+    <h1 class="logo-home">
+            <a href="/html/signup/index.html"><img src="../assets/images/Logo-hodu.png" alt="HODU"></a>
+        </h1>
+    </header>
+    
+    <ul class = "signup-tab">
+        <li class = "tab-buy"><button type = "button">구매회원가입</button></li>
+        <li class = "tab-sell"><button type = "button>판매회원가입</button></li>
+    </ul>
+
+    <form class = "signup-form">
+        <section class="user info">
+            <h2 class = "ir">회원 정보 입력</h2> 
+            
+            <ul class="form-list">
+                <li>
+                    <label for = "user-id">아이디</label>
+                    <div class = "input-with-btn">
+                        <input type = "text" id = "user-id" required>
+                        <button type = "button" class = "btn-check">중복확인</button>
+                    </div>
+                </li>
+                <li>
+                    <label for = "user-pw">비밀번호</label>
+                    <input type = "password" id = "user-pw" required>
+                </li>
+            </ul>
+        </section>
+
+  </body>
+</html>
