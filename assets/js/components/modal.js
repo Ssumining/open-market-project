@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 테스트를 위해 이동 전 상태를 true로 저장
             // 실제 로그인 페이지의 성공 로직에 넣는 것이 더 정확
             localStorage.setItem('isLoggedIn', 'true');
-            location.href = './login/index.html';
+            location.href = '/html/login/index.html';
         });
     }
 });

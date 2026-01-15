@@ -32,7 +32,7 @@ body {
 /* 로그인 박스 */
 .login-box {
     border: 1px solid var(--color-bg-border);
-    border-radius: 1.6rem;
+    border-radius: var(--radius-ms);
     padding: 3.5rem;
     background-color: var(--color-bg-base);
     box-sizing: border-box;
@@ -62,7 +62,7 @@ body {
     padding: 1.9rem;
     
     border: none;
-    border-radius: 1.6rem;
+    border-radius: var(--radius-ms);
     cursor: pointer;
 
     color: var(--color-bg-base);
@@ -75,7 +75,7 @@ body {
 
 /* 하단 링크 */
 .find-links {
-    margin-top: 3.0rem;
+    margin-top: var(--radius-lg);
 }
 
 .find-links a {
@@ -88,6 +88,6 @@ body {
 }
 
 .divider {
-    margin: 0 1.2rem;
+    margin: 0 var(--space-sm);
     color: var(--color-text-main);
 }

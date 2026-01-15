@@ -58,6 +58,7 @@
 
   /* Border radius */
   --radius-sm: 0.5rem; /*버튼 및 입력창*/
+  --radius-ms: 1.6rem; /*버튼*/
   --radius-md: 1.8rem; /*컨테이너, 상품 카드*/
   --radius-lg: 3.0rem; /*모달 및 배너*/
 
@@ -118,6 +119,7 @@
 
   /* button width&height */
     --btn-min-width: clamp(8.0rem, 15vw, 12.0rem);
+    --btn-height-main : clamp(6.0rem, 8vw, 8.0rem); /*강조되는 메인 버튼 사용*/
     --btn-height: clamp(4.0rem, 6vw, 6.0rem); /*호두 기준*/
 
   /* radius */
