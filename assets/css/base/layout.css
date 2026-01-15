@@ -28,15 +28,14 @@ body{
 header {
     background-color: var(--color-bg-base);
     border-bottom: 1px solid var(--color-bg-secondary);
-    padding: 2.0rem 0;
+    box-shadow: 0 0.4rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
-.header .container {
+header .container {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between; /*요소 분산*/
-    padding-top: 0;
-    padding-bottom: 0;
 }
 
 /*로고&검색*/
@@ -58,10 +57,12 @@ header {
     width: 40.0rem;
     height: 4.6rem;
     padding: 0 2.2rem;
+    box-sizing: border-box;
 }
 
 .search-form input {
     flex: 1;
+    width: 100%; 
     border: none;
     outline: none;
     font-size: var(--fs-sm);
@@ -107,6 +108,12 @@ header {
     flex: 1; /*본문이 화면 공간 차지, 푸터 위치 잡기*/
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.promotion {
+    width: 100%;
+    /* 슬라이더 컨트롤과 페이지네이션이 절대 위치(absolute)이므로 부모에 relative 필요 */
+    position: relative; 
 }
 
 /*배너*/

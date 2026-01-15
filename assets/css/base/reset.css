@@ -69,3 +69,18 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+/* button, input reset code 추가 요청 */
+
+button {
+    background: none;    
+    border: none;         
+    padding: 0;           
+    cursor: pointer;      
+}
+
+input {
+    border: none;        
+    outline: none;       
+    background: none;            
+}
