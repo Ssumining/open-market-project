@@ -29,8 +29,8 @@
 
 .btn-close-x {
     position: absolute;
-    top: 1.8rem;
-    right: 1.8rem;
+    top: var(--radius-md);
+    right: var(--radius-md);
 }
 
 .btn-close-x-icon {
@@ -44,7 +44,7 @@
     font-size: var(--fs-md);
     line-height: 1.5;
     color: var(--color-text-base);
-    margin-bottom: 3.0rem;
+    margin-bottom: var(--radius-lg);
 }
 
 .modal-btns {
