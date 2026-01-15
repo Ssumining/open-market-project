@@ -43,6 +43,12 @@ body {
     margin-bottom: 3.6rem;
 }
 
+/* input-group 다음에 오는 error-txt가 보일 때 (display: block), 
+   input-group의 아래 여백이 0 */
+.input-group:has(+ .error-txt[style*="display: block"]) {
+    margin-bottom: 0;
+}
+
 .input-group input {
     width: 100%;
     min-height: 6.0rem;
@@ -56,15 +62,30 @@ body {
     color: var(--color-text-muted);
 }
 
+.error-txt {
+    display: none; 
+    text-align: left;
+    margin: var(--fs-xl) 0;
+
+    font-family: var(--font-base);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-md);
+    color: var(--color-error); 
+}
+
 /* 버튼 */
 .login-btn {
     width: 100%;
-    padding: 1.9rem;
+    padding: var(--fs-fixed-lg);
     
     border: none;
     border-radius: var(--radius-ms);
     cursor: pointer;
 
+    font-family: var(--font-base);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-md);
+    
     color: var(--color-bg-base);
     background-color: var(--color-primary); /* 이미지의 녹색 계열 */
 }

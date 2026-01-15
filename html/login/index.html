@@ -15,11 +15,12 @@
     <main class="login-container">
         <h2 class="login-txt">로그인</h2>
         <section class="login-box">
-            <form action="#" method="POST">
+            <form id="loginForm">
                 <div class="input-group">
-                    <input type="text" id="username" placeholder="아이디" required>
-                    <input type="password" id="password" placeholder="비밀번호" required>
+                    <input type="text" id="username" placeholder="아이디">
+                    <input type="password" id="password" placeholder="비밀번호">
                 </div>
+                <p id="errorMessage" class="error-txt"></p>
                 <button type="submit" class="login-btn">로그인</button>
             </form>
         </section>
@@ -31,4 +32,5 @@
         </nav>
     </main>
 </body>
+<script type="module" src="/assets/js/pages/login.js"></script>
 </html>
