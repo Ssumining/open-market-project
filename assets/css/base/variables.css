@@ -28,6 +28,7 @@
 
   /* text colors */
     --color-text-base:#000000;
+    --color-text-main: #333333; /* 일반적인 본문 및 링크 텍스트용 */
     --color-text-inverse: #FFFFFF; /*초록색 배경용*/
     --color-text-accent:#FF0000; /*강조*/
     --color-text-muted:#767676; /*보조 설명*/
@@ -36,6 +37,7 @@
     --color-bg-base: #FFFFFF; 
     --color-bg-secondary: #F2F2F2; /*푸터 및 구분 섹션 배경*/
     --color-bg-dim:rgba(0, 0, 0, 0.6); /*뒷배경*/
+    --color-bg-border: #C4C4C4; /*보더*/
 
     --color-primary: #21BF48; 
     --color-primary-hover: #1EAB40; /* 인터랙션 변수(마우스) */
@@ -56,6 +58,7 @@
 
   /* Border radius */
   --radius-sm: 0.5rem; /*버튼 및 입력창*/
+  --radius-ms: 1.6rem; /*버튼*/
   --radius-md: 1.8rem; /*컨테이너, 상품 카드*/
   --radius-lg: 3.0rem; /*모달 및 배너*/
 
@@ -116,6 +119,7 @@
 
   /* button width&height */
     --btn-min-width: clamp(8.0rem, 15vw, 12.0rem);
+    --btn-height-main : clamp(6.0rem, 8vw, 8.0rem); /*강조되는 메인 버튼 사용*/
     --btn-height: clamp(4.0rem, 6vw, 6.0rem); /*호두 기준*/
 
   /* radius */
