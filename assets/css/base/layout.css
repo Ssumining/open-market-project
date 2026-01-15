@@ -194,8 +194,9 @@ header .container {
 }
 
 .footer {
+    width: 100%;
     background-color: var(--color-bg-secondary);
-    padding: 6.0rem 0;
+    padding: 3.0rem 0;
 }
 
 /*웹 접근성*/

@@ -4,41 +4,101 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>signup</title>
-    <link rel="stylesheet" href="../assests/css/base/variables.css">
-    <link rel="stylesheet" href="../assests/css/base/reset.css">
-    <link rel="stylesheet" href="../assests/css/base/components.css">
-    <link rel="stylesheet" href="../assests/css/base/layout.css">
+    <link rel="stylesheet" href="../assets/css/base/variables.css">
+    <link rel="stylesheet" href="../assets/css/base/reset.css">
+    <link rel="stylesheet" href="../assets/css/base/components.css">
+    <link rel="stylesheet" href="../assets/css/base/layout.css">
   </head>
   <body>
     <header class="header-signup">
     <h1 class="logo-home">
-            <a href="/html/signup/index.html"><img src="../assets/images/Logo-hodu.png" alt="HODU"></a>
+            <a href="/html/signup/index.html"><img src="/assets/images/Logo-hodu.png" alt="HODU"></a>
         </h1>
     </header>
     
-    <ul class = "signup-tab">
-        <li class = "tab-buy"><button type = "button">구매회원가입</button></li>
-        <li class = "tab-sell"><button type = "button>판매회원가입</button></li>
-    </ul>
-
+    <!--tab-->
+    <main class = "signup-main">
+        <div class = "signup-inner">
+            <nav class = "signup-tabs">
+                <h2 class = "ir">가입 유형 선택</h2>
+                <button type = "button" class = "tab-buy">구매회원가입</button>
+                <button type = "button" class = "tab-sell">판매회원가입</button>
+            </nav>
+    
+    <!--id-->
     <form class = "signup-form">
-        <section class="user info">
-            <h2 class = "ir">회원 정보 입력</h2> 
-            
-            <ul class="form-list">
-                <li>
-                    <label for = "user-id">아이디</label>
-                    <div class = "input-with-btn">
-                        <input type = "text" id = "user-id" required>
-                        <button type = "button" class = "btn-check">중복확인</button>
-                    </div>
-                </li>
-                <li>
-                    <label for = "user-pw">비밀번호</label>
-                    <input type = "password" id = "user-pw" required>
-                </li>
-            </ul>
-        </section>
+        <fieldset class = "common-info">
+            <legend class = "ir">회원가입 정보</legend>
 
-  </body>
+            <label for = "user-id">아이디</label>
+            <div class = "input-row"> 
+                <input type = "text" id = "user-id" required>
+                <button type = "button" class = "btn-check">중복확인</button>
+            </div>
+    <!--message(js)-->
+            <p id = "id-msg" class="msg-box ir" aria-live="polite"></p>
+
+    <!--pw-->
+        <label for = "user-pw">비밀번호</label>
+        <div class = "input-row">
+            <input type = "password" id = "user-pw" required>
+            <span class = "icon-valid-check" aria-hidden = "true"></span>
+        </div>
+        <p id = "pw-msg" class = "msg-box ir" aria-live = "polite"></p>
+
+        <label for = "user-pw-check" class = "label-sub">비밀번호 확인</label>
+        <div class = "input-row">
+            <input type = "password" id = "user-pw-check" required>
+            <span class = "icon-valid-check" aria-hidden="true"></span>
+        </div>
+        <p id = "pw-check-msg" class = "msg-box ir" aria-live="polite"></p>
+
+    <!--personal-->
+        <label for = "user-name">이름</label>
+        <input type = "text" id = "user-name" required>
+        <p id = "name-msg" class = "msg-box ir" aria-live = "polite"></p>
+
+        <label for = "phone-prefix">전화번호</label>
+        <div class = "input-row">
+            <select id = "phone-prefix" title = "앞자리 선택">
+                <option value = "010">010</option>
+                <option value = "011">011</option>
+                <option value = "016">016</option>
+                <option value = "017">017</option>
+                <option value = "018">018</option>
+                <option value = "019">019</option>
+            </select>
+            <input type = "number" class = "phone-mid" title = "중간자리 입력" required>
+            <input type = "number" class = "phone-last" title = "뒷자리 입력" required>
+        </div>
+        <p id = "phone-msg" class = "msg-box ir" aria-live = "polite"></p>
+    </fieldset>
+
+    <!--seller-->
+    <fieldset class = "seller-info-area">
+        <legend class = "ir">판매자 추가 정보 섹션</legend>
+        <label for = "business-num">사업자 등록번호</label>
+        <div class = "input-row">
+            <input type = "number" id = "business-num" required>
+            <button type = "button" class = "btn-verify">인증</button>
+        </div>
+        <p id = "business-msg" class = "msg-box ir" aria-live = "polite"></p>
+
+        <label for="store-name" class="label-sub">스토어 이름</label>
+        <input type="text" id="store-name" required>
+        <p id="store-msg" class="msg-box ir" aria-live="polite"></p>
+    </fieldset>
+
+    <footer class = "form-footer">
+        <h2 class = "ir">약관 동의 및 제출</h2>
+        <label class = "check-label">
+            <input type = "checkbox" id = "terms-agree" required>
+            <span class = "check-text">호두샵의 이용약관 및 개인정보처리방침에 대한 내용을 확인하였고 동의합니다.</span>
+        </label>
+        <button type = "submit" class = "btn-submit-join" disabled>가입하기</button>
+    </footer>
+    </form>
+    </div>
+    </main>
+</body>
 </html>

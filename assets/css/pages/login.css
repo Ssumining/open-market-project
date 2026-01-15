@@ -1,0 +1,93 @@
+body {
+    justify-content: center;
+    align-items: center;
+    gap: 7.0rem;
+}
+
+.login-txt {
+    font-family: var(--font-base);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-xl);
+    color: var(--color-text-base);
+
+    margin-bottom: var(--fs-lg);
+}
+
+.login-container {
+    text-align: center;
+    min-width: 55.0rem;
+    min-height: 29.2rem;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+}
+
+.logo img {
+    width: 23.8rem;
+    height: 7.4rem;
+}
+
+/* 로그인 박스 */
+.login-box {
+    border: 1px solid var(--color-bg-border);
+    border-radius: var(--radius-ms);
+    padding: 3.5rem;
+    background-color: var(--color-bg-base);
+    box-sizing: border-box;
+}
+
+/* 입력 필드 */
+.input-group {
+    margin-bottom: 3.6rem;
+}
+
+.input-group input {
+    width: 100%;
+    min-height: 6.0rem;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--color-bg-border);
+
+    font-family: var(--font-base);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-md);
+    color: var(--color-text-muted);
+}
+
+/* 버튼 */
+.login-btn {
+    width: 100%;
+    padding: 1.9rem;
+    
+    border: none;
+    border-radius: var(--radius-ms);
+    cursor: pointer;
+
+    color: var(--color-bg-base);
+    background-color: var(--color-primary); /* 이미지의 녹색 계열 */
+}
+
+.login-btn:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* 하단 링크 */
+.find-links {
+    margin-top: var(--radius-lg);
+}
+
+.find-links a {
+    text-decoration: none;
+
+    font-family: var(--font-base);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-md);
+    color: var(--color-text-main);
+}
+
+.divider {
+    margin: 0 var(--space-sm);
+    color: var(--color-text-main);
+}

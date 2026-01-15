@@ -41,7 +41,7 @@ const initGNB = () => {
                 // 이동하기 전에 상태를 true로 저장
                 // 서버 들어오기 전 테스트로 변경할 수 있게 함
                 localStorage.setItem('isLoggedIn', 'true');
-                location.href = './login/index.html';
+                location.href = '/html/login/index.html';
             } else {
                 const isShowing = dropdownMenu.classList.toggle('show');
                 loginBtn.classList.toggle('active', isShowing);
