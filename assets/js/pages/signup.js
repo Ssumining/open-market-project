@@ -1,205 +1,558 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const ICON_OFF = "/assets/images/icon-check-off.png";
-    const ICON_ON = "/assets/images/icon-check-on.png";
-    const BASE_URL = 'https://api.wenivops.co.kr/services/open-market';
-    const joinForm = document.getElementById('joinform');
-    const userTypeInput = document.getElementById('usertype');
-    const submitBtn = document.querySelector('.btn-submit-join');
-    const termsCheck = document.getElementById('terms-agree');
+const JOIN_API = "https://api.wenivops.co.kr/services/open-market/";
 
-    // 탭 관련 요소
-    const tabBuyer = document.getElementById('tab-buyer');
-    const tabSeller = document.getElementById('tab-seller');
-    const buyerPanel = document.getElementById('buyer-panel');
-    const sellerPanel = document.getElementById('seller-panel');
+const DOMElementArray = {};
 
-    // 입력 필드들
-    const fields = {
-        username: { input: document.getElementById('user-id'), msg: document.getElementById('id-msg'), valid: false, checkBtn: document.querySelector('.btn-check') },
-        password: { input: document.getElementById('user-pw'), msg: document.getElementById('pw-msg'), icon: document.querySelector('#buyer-panel .icon-valid-check'), valid: false },
-        passwordConfirm: { input: document.getElementById('user-pw-check'), msg: document.getElementById('pw-check-msg'), icon: document.querySelectorAll('.icon-valid-check')[1], valid: false },
-        name: { input: document.getElementById('user-name'), msg: document.getElementById('name-msg'), valid: false },
-        phoneMid: { input: document.querySelector('.phone-mid'), valid: false },
-        phoneLast: { input: document.querySelector('.phone-last'), valid: false },
-        businessNum: { input: document.getElementById('business-num'), msg: document.getElementById('business-msg'), valid: false, verifyBtn: document.querySelector('.btn-verify') },
-        storeName: { input: document.getElementById('store-name'), msg: document.getElementById('store-msg'), valid: false }
-    };
+// 유효성 상태 관리 (버튼 활성화용)
+let validationsMapping = {};
+let sellerValidationsMapping = {};
 
-    // 1. 탭 전환 로직
-    const switchTab = (type) => {
-        userTypeInput.value = type;
-        if (type === 'buyer') {
-            tabBuyer.classList.add('on');
-            tabSeller.classList.remove('on');
-            sellerPanel.hidden = true;
-            tabBuyer.setAttribute('aria-selected', 'true');
-            tabSeller.setAttribute('aria-selected', 'false');
-        } else {
-            tabSeller.classList.add('on');
-            tabBuyer.classList.remove('on');
-            sellerPanel.hidden = false;
-            tabSeller.setAttribute('aria-selected', 'true');
-            tabBuyer.setAttribute('aria-selected', 'false');
-        }
-        checkFormValidity();
-    };
+// ========================================
+// 1. DOM 요소 초기화
+// ========================================
+function loadJoinDOM() {
+  // 폼
+  DOMElementArray.joinForm = document.getElementById("joinform");
+  DOMElementArray.userType = document.getElementById("usertype");
+  
+  // 탭 관련
+  DOMElementArray.tabBuyer = document.getElementById("tab-buyer");
+  DOMElementArray.tabSeller = document.getElementById("tab-seller");
+  DOMElementArray.buyerPanel = document.getElementById("buyer-panel");
+  DOMElementArray.sellerPanel = document.getElementById("seller-panel");
 
-    tabBuyer.addEventListener('click', () => switchTab('buyer'));
-    tabSeller.addEventListener('click', () => switchTab('seller'));
+  // ID & PW
+  DOMElementArray.userId = document.getElementById("user-id");
+  DOMElementArray.userIdCheckBtn = document.querySelector(".btn-check");
+  DOMElementArray.userIdMessage = document.getElementById("id-msg");
+  
+  DOMElementArray.password = document.getElementById("user-pw");
+  DOMElementArray.passwordMessage = document.getElementById("pw-msg");
+  DOMElementArray.passwordRow = DOMElementArray.password?.closest('.input-row');
+  
+  DOMElementArray.passwordConfirm = document.getElementById("user-pw-check");
+  DOMElementArray.pwConfirmMessage = document.getElementById("pw-check-msg");
+  DOMElementArray.passwordConfirmRow = DOMElementArray.passwordConfirm?.closest('.input-row');
 
-    // 2. 메시지 표시 유틸리티
-    const showMsg = (field, text, isSuccess = false) => {
-        field.msg.textContent = text;
-        field.msg.classList.remove('ir'); // 화면에 표시
-        field.msg.style.color = isSuccess ? '#21BF48' : '#EB5757';
-        field.input.style.borderColor = isSuccess ? '#21BF48' : '#EB5757';
-    };
+  // 개인정보
+  DOMElementArray.userName = document.getElementById("user-name");
+  DOMElementArray.userNameMessage = document.getElementById("name-msg");
+  
+  DOMElementArray.phoneFirst = document.getElementById("phone-prefix");
+  DOMElementArray.phoneMiddle = document.querySelector(".phone-mid");
+  DOMElementArray.phoneLast = document.querySelector(".phone-last");
+  DOMElementArray.phoneNumberMessage = document.getElementById("phone-msg");
 
-    // 3. 필수 입력 순서 검증 (상단이 비었는지 확인)
-    const checkPreviousFields = (currentFieldKey) => {
-        const keys = Object.keys(fields);
-        const currentIndex = keys.indexOf(currentFieldKey);
-        for (let i = 0; i < currentIndex; i++) {
-            const prevField = fields[keys[i]];
-            if (userTypeInput.value === 'buyer' && (keys[i] === 'businessNum' || keys[i] === 'storeName')) continue;
-            if (!prevField.input.value.trim()) {
-                showMsg(prevField, "필수 정보입니다.");
-                return false;
-            }
-        }
-        return true;
-    };
+  // 판매자 정보
+  DOMElementArray.businessNumber = document.getElementById("business-num");
+  DOMElementArray.businessNumberCheckBtn = document.querySelector(".btn-verify");
+  DOMElementArray.businessNumberMessage = document.getElementById("business-msg");
+  DOMElementArray.storeName = document.getElementById("store-name");
+  DOMElementArray.storeNameMessage = document.getElementById("store-msg");
 
-    // 4. 아이디 중복 확인 API
-    fields.username.checkBtn.addEventListener('click', async () => {
-        const val = fields.username.input.value;
-        const idRegex = /^[a-z0-9]{4,20}$/;
+  // 기타
+  DOMElementArray.privacyConsent = document.getElementById("terms-agree");
+  DOMElementArray.joinBtn = document.querySelector(".btn-submit-join");
 
-        if (!idRegex.test(val)) {
-            showMsg(fields.username, "20자 이내의 영어 소문자, 대문자, 숫자만 사용 가능합니다.");
-            fields.username.valid = false;
-            return;
-        }
+  // 유효성 체크 매핑
+  validationsMapping = {
+    userId: { 
+      input: DOMElementArray.userId, 
+      message: DOMElementArray.userIdMessage, 
+      isCheck: false 
+    },
+    password: { 
+      input: DOMElementArray.password, 
+      message: DOMElementArray.passwordMessage, 
+      isCheck: false 
+    },
+    passwordConfirm: { 
+      input: DOMElementArray.passwordConfirm, 
+      message: DOMElementArray.pwConfirmMessage, 
+      isCheck: false 
+    },
+    userName: {
+      input: DOMElementArray.userName,
+      message: DOMElementArray.userNameMessage
+    },
+    phoneNumber: {
+      input: [
+        DOMElementArray.phoneFirst,
+        DOMElementArray.phoneMiddle,
+        DOMElementArray.phoneLast
+      ],
+      message: DOMElementArray.phoneNumberMessage
+    }
+  };
 
-        try {
-            const res = await fetch(`${BASE_URL}/accounts/validate-username/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: val })
-            });
-            const data = await res.json();
-            if (res.ok) {
-                showMsg(fields.username, "멋진 아이디네요 :)", true);
-                fields.username.valid = true;
-            } else {
-                showMsg(fields.username, data.error || "이미 사용 중인 아이디입니다.");
-                fields.username.valid = false;
-            }
-        } catch (e) { console.error(e); }
-        checkFormValidity();
+  sellerValidationsMapping = {
+    businessNumber: { 
+      input: DOMElementArray.businessNumber, 
+      message: DOMElementArray.businessNumberMessage, 
+      isCheck: false 
+    },
+    storeName: {
+      input: DOMElementArray.storeName,
+      message: DOMElementArray.storeNameMessage
+    }
+  };
+}
+
+// ========================================
+// 2. 이벤트 리스너 설정
+// ========================================
+function eventSetting() {
+  // 탭 변경
+  DOMElementArray.tabBuyer.addEventListener("click", () => handleTabChange("buyer"));
+  DOMElementArray.tabSeller.addEventListener("click", () => handleTabChange("seller"));
+
+  // ID 중복 확인
+  DOMElementArray.userIdCheckBtn.addEventListener("click", () => checkUserId());
+  
+  // ID 입력 시 초기화
+  DOMElementArray.userId.addEventListener("input", () => {
+    resetError(DOMElementArray.userId, DOMElementArray.userIdMessage);
+    validationsMapping.userId.isCheck = false;
+    handleInputCheck();
+  });
+
+  // 비밀번호 유효성 검사
+  DOMElementArray.password.addEventListener("input", (e) => {
+    // 비밀번호 확인란 초기화
+    if (DOMElementArray.passwordConfirm.value) {
+      DOMElementArray.passwordConfirm.value = "";
+      resetError(DOMElementArray.passwordConfirm, DOMElementArray.pwConfirmMessage);
+      if (DOMElementArray.passwordConfirmRow) {
+        DOMElementArray.passwordConfirmRow.classList.remove("check-password");
+      }
+      validationsMapping.passwordConfirm.isCheck = false;
+    }
+
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
+    const isValid = regex.test(e.target.value);
+    
+    if (!isValid && e.target.value.length > 0) {
+      showError(
+        DOMElementArray.password, 
+        DOMElementArray.passwordMessage, 
+        "8자 이상, 영문 대 소문자, 숫자, 특수문자를 사용하세요."
+      );
+      if (DOMElementArray.passwordRow) {
+        DOMElementArray.passwordRow.classList.remove("check-password");
+      }
+      validationsMapping.password.isCheck = false;
+    } else if (isValid) {
+      showSuccess(
+        DOMElementArray.password, 
+        DOMElementArray.passwordMessage, 
+        "사용 가능한 비밀번호입니다."
+      );
+      if (DOMElementArray.passwordRow) {
+        DOMElementArray.passwordRow.classList.add("check-password");
+      }
+      validationsMapping.password.isCheck = true;
+    } else {
+      resetError(DOMElementArray.password, DOMElementArray.passwordMessage);
+      if (DOMElementArray.passwordRow) {
+        DOMElementArray.passwordRow.classList.remove("check-password");
+      }
+      validationsMapping.password.isCheck = false;
+    }
+    
+    handleInputCheck();
+  });
+
+  // 비밀번호 재확인
+  DOMElementArray.passwordConfirm.addEventListener("input", (e) => {
+    if (e.target.value === "") {
+      resetError(DOMElementArray.passwordConfirm, DOMElementArray.pwConfirmMessage);
+      if (DOMElementArray.passwordConfirmRow) {
+        DOMElementArray.passwordConfirmRow.classList.remove("check-password");
+      }
+      validationsMapping.passwordConfirm.isCheck = false;
+    } else if (e.target.value !== DOMElementArray.password.value) {
+      showError(
+        DOMElementArray.passwordConfirm, 
+        DOMElementArray.pwConfirmMessage, 
+        "비밀번호가 일치하지 않습니다."
+      );
+      if (DOMElementArray.passwordConfirmRow) {
+        DOMElementArray.passwordConfirmRow.classList.remove("check-password");
+      }
+      validationsMapping.passwordConfirm.isCheck = false;
+    } else {
+      showSuccess(
+        DOMElementArray.passwordConfirm, 
+        DOMElementArray.pwConfirmMessage, 
+        "비밀번호가 일치합니다."
+      );
+      if (DOMElementArray.passwordConfirmRow) {
+        DOMElementArray.passwordConfirmRow.classList.add("check-password");
+      }
+      validationsMapping.passwordConfirm.isCheck = true;
+    }
+    handleInputCheck();
+  });
+
+  // 이름 입력
+  DOMElementArray.userName.addEventListener("input", () => {
+    resetError(DOMElementArray.userName, DOMElementArray.userNameMessage);
+    handleInputCheck();
+  });
+
+  // 휴대폰번호 입력
+  DOMElementArray.phoneMiddle.addEventListener("input", () => {
+    handleInputCheck();
+  });
+  DOMElementArray.phoneLast.addEventListener("input", () => {
+    handleInputCheck();
+  });
+
+  // 판매자 사업자번호 인증
+  DOMElementArray.businessNumberCheckBtn.addEventListener("click", async () => {
+    await checkBusinessNumber();
+  });
+
+  // 판매자 스토어 이름 입력
+  DOMElementArray.storeName.addEventListener("input", () => {
+    resetError(DOMElementArray.storeName, DOMElementArray.storeNameMessage);
+    handleInputCheck();
+  });
+
+  // 약관 동의 체크
+  DOMElementArray.privacyConsent.addEventListener("change", () => handleInputCheck());
+
+  // 최종 제출
+  DOMElementArray.joinForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    // 폼 유효성 검사
+    if (!DOMElementArray.joinForm.checkValidity()) {
+      DOMElementArray.joinForm.reportValidity();
+      return;
+    }
+
+    // 추가 검증
+    const validationResult = validateAllFields();
+    if (!validationResult.isValid) {
+      alert(validationResult.message);
+      return;
+    }
+
+    const result = await join();
+    
+    if (result.user_type) {
+      alert("회원가입이 완료되었습니다!");
+      // 로그인 페이지로 이동 (경로는 프로젝트에 맞게 수정)
+      // location.href = "/html/login/index.html"; 
+    } else if (result.error) {
+      alert(result.error);
+    } else {
+      alert("입력 정보를 다시 확인해주세요.");
+    }
+  });
+}
+
+// ========================================
+// 3. 탭 변경 로직
+// ========================================
+function handleTabChange(type) {
+  const isBuyer = type === "buyer";
+  
+  // 탭 버튼 스타일 변경
+  DOMElementArray.tabBuyer.classList.toggle("on", isBuyer);
+  DOMElementArray.tabSeller.classList.toggle("on", !isBuyer);
+  
+  // ARIA 속성 업데이트
+  DOMElementArray.tabBuyer.ariaSelected = isBuyer;
+  DOMElementArray.tabSeller.ariaSelected = !isBuyer;
+
+  // 패널 표시/숨김
+  DOMElementArray.buyerPanel.hidden = !isBuyer;
+  DOMElementArray.sellerPanel.hidden = isBuyer;
+  
+  // 유저 타입 값 설정
+  DOMElementArray.userType.value = type;
+  
+  // 버튼 활성화 상태 재확인
+  handleInputCheck();
+}
+
+// ========================================
+// 4. 아이디 중복 검사
+// ========================================
+async function checkUserId() {
+  const username = DOMElementArray.userId.value.trim();
+  
+  if (!username) {
+    showError(
+      DOMElementArray.userId, 
+      DOMElementArray.userIdMessage, 
+      "아이디를 입력해주세요."
+    );
+    DOMElementArray.userId.focus();
+    return;
+  }
+
+  // 형식 검사 (4-20자, 영문 소문자+숫자)
+  const regex = /^[a-z0-9]{4,20}$/;
+  if (!regex.test(username)) {
+    showError(
+      DOMElementArray.userId, 
+      DOMElementArray.userIdMessage, 
+      "20자 이내의 영문 소문자, 숫자만 사용 가능합니다."
+    );
+    validationsMapping.userId.isCheck = false;
+    DOMElementArray.userId.focus();
+    return;
+  }
+
+  const result = await postData("accounts/validate-username/", { username });
+  
+  if (result.error) {
+    showError(
+      DOMElementArray.userId, 
+      DOMElementArray.userIdMessage, 
+      result.error
+    );
+    validationsMapping.userId.isCheck = false;
+    DOMElementArray.userId.focus();
+  } else {
+    showSuccess(
+      DOMElementArray.userId, 
+      DOMElementArray.userIdMessage, 
+      "멋진 아이디네요 :)"
+    );
+    validationsMapping.userId.isCheck = true;
+    DOMElementArray.password.focus();
+  }
+  
+  handleInputCheck();
+}
+
+// ========================================
+// 5. 사업자번호 인증
+// ========================================
+async function checkBusinessNumber() {
+  const businessNumber = DOMElementArray.businessNumber.value.trim();
+  
+  if (!businessNumber) {
+    showError(
+      DOMElementArray.businessNumber, 
+      DOMElementArray.businessNumberMessage, 
+      "사업자 등록번호를 입력해주세요."
+    );
+    DOMElementArray.businessNumber.focus();
+    return;
+  }
+
+  // 10자리 숫자 검사
+  const regex = /^[0-9]{10}$/;
+  if (!regex.test(businessNumber)) {
+    showError(
+      DOMElementArray.businessNumber, 
+      DOMElementArray.businessNumberMessage, 
+      "10자리 숫자로 입력해주세요."
+    );
+    sellerValidationsMapping.businessNumber.isCheck = false;
+    DOMElementArray.businessNumber.focus();
+    return;
+  }
+
+  const result = await postData("accounts/seller/validate-registration-number/", {
+    company_registration_number: businessNumber
+  });
+  
+  if (result.error) {
+    showError(
+      DOMElementArray.businessNumber, 
+      DOMElementArray.businessNumberMessage, 
+      result.error
+    );
+    sellerValidationsMapping.businessNumber.isCheck = false;
+    DOMElementArray.businessNumber.focus();
+  } else {
+    showSuccess(
+      DOMElementArray.businessNumber, 
+      DOMElementArray.businessNumberMessage, 
+      "인증되었습니다."
+    );
+    sellerValidationsMapping.businessNumber.isCheck = true;
+  }
+  
+  handleInputCheck();
+}
+
+// ========================================
+// 6. 모든 필드 검증
+// ========================================
+function validateAllFields() {
+  const requiredText = "필수 정보입니다.";
+  
+  // ID 검증
+  if (!validationsMapping.userId.isCheck) {
+    return { isValid: false, message: "아이디 중복 확인을 해주세요." };
+  }
+  
+  // 비밀번호 검증
+  if (!validationsMapping.password.isCheck) {
+    return { isValid: false, message: "비밀번호 형식을 확인해주세요." };
+  }
+  
+  // 비밀번호 확인 검증
+  if (!validationsMapping.passwordConfirm.isCheck) {
+    return { isValid: false, message: "비밀번호가 일치하는지 확인해주세요." };
+  }
+  
+  // 이름 검증
+  if (!DOMElementArray.userName.value.trim()) {
+    showError(DOMElementArray.userName, DOMElementArray.userNameMessage, requiredText);
+    return { isValid: false, message: "이름을 입력해주세요." };
+  }
+  
+  // 휴대폰번호 검증
+  if (!DOMElementArray.phoneMiddle.value || !DOMElementArray.phoneLast.value) {
+    showError(null, DOMElementArray.phoneNumberMessage, requiredText);
+    return { isValid: false, message: "휴대폰번호를 입력해주세요." };
+  }
+  
+  // 판매자인 경우 추가 검증
+  if (DOMElementArray.userType.value === "seller") {
+    if (!sellerValidationsMapping.businessNumber.isCheck) {
+      return { isValid: false, message: "사업자번호 인증을 해주세요." };
+    }
+    
+    if (!DOMElementArray.storeName.value.trim()) {
+      showError(DOMElementArray.storeName, DOMElementArray.storeNameMessage, requiredText);
+      return { isValid: false, message: "스토어 이름을 입력해주세요." };
+    }
+  }
+  
+  // 약관 동의 검증
+  if (!DOMElementArray.privacyConsent.checked) {
+    return { isValid: false, message: "약관에 동의해주세요." };
+  }
+  
+  return { isValid: true };
+}
+
+// ========================================
+// 7. UI 제어 함수
+// ========================================
+function showError(input, msgEl, text) {
+  if (input) {
+    input.classList.add("input-error");
+  }
+  
+  if (msgEl) {
+    msgEl.innerText = text;
+    msgEl.classList.remove("ir");
+    msgEl.classList.remove("msg-success");
+    msgEl.classList.add("msg-error");
+  }
+}
+
+function showSuccess(input, msgEl, text) {
+  if (input) {
+    input.classList.remove("input-error");
+  }
+  
+  if (msgEl) {
+    msgEl.innerText = text;
+    msgEl.classList.remove("ir");
+    msgEl.classList.remove("msg-error");
+    msgEl.classList.add("msg-success");
+  }
+}
+
+function resetError(input, msgEl) {
+  if (input) {
+    input.classList.remove("input-error");
+  }
+  
+  if (msgEl) {
+    msgEl.innerText = "";
+    msgEl.classList.add("ir");
+    msgEl.classList.remove("msg-error", "msg-success");
+  }
+}
+
+// ========================================
+// 8. 버튼 활성화 제어
+// ========================================
+function handleInputCheck() {
+  let isInvalid = false;
+
+  // 공통 필수 항목 체크
+  const commonValid = 
+    validationsMapping.userId.isCheck && 
+    validationsMapping.password.isCheck && 
+    validationsMapping.passwordConfirm.isCheck &&
+    DOMElementArray.userName.value.trim() &&
+    DOMElementArray.phoneMiddle.value &&
+    DOMElementArray.phoneLast.value &&
+    DOMElementArray.privacyConsent.checked;
+
+  if (!commonValid) {
+    isInvalid = true;
+  }
+
+  // 판매자인 경우 추가 항목 체크
+  if (DOMElementArray.userType.value === "seller") {
+    if (!sellerValidationsMapping.businessNumber.isCheck || 
+        !DOMElementArray.storeName.value.trim()) {
+      isInvalid = true;
+    }
+  }
+
+  DOMElementArray.joinBtn.disabled = isInvalid;
+}
+
+// ========================================
+// 9. 가입 API 호출
+// ========================================
+async function join() {
+  const isSeller = DOMElementArray.userType.value === "seller";
+  const url = isSeller ? "accounts/seller/signup/" : "accounts/buyer/signup/";
+  
+  const data = {
+    username: DOMElementArray.userId.value.trim(),
+    password: DOMElementArray.password.value,
+    name: DOMElementArray.userName.value.trim(),
+    phone_number: `${DOMElementArray.phoneFirst.value}${DOMElementArray.phoneMiddle.value}${DOMElementArray.phoneLast.value}`,
+  };
+
+  if (isSeller) {
+    data.company_registration_number = DOMElementArray.businessNumber.value.trim();
+    data.store_name = DOMElementArray.storeName.value.trim();
+  }
+
+  return await postData(url, data);
+}
+
+// ========================================
+// 10. API POST 공통 함수
+// ========================================
+async function postData(url = "", data = {}) {
+  try {
+    const res = await fetch(JOIN_API + url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
+    
+    const result = await res.json();
+    return result;
+  } catch (e) {
+    console.error("API 호출 실패:", e);
+    return { error: "서버 연결에 실패했습니다." };
+  }
+}
 
-    // 5. 비밀번호 검증
-    fields.password.input.addEventListener('input', () => {
-        const val = fields.password.input.value;
-        const pwRegex = /^(?=.*[a-z])(?=.*[0-9]).{8,}$/;
-        
-        if (pwRegex.test(val)) {
-            fields.password.icon.src = ICON_ON;
-            fields.password.msg.textContent = "";
-            fields.password.icon.style.filter = "invert(48%) sepia(87%) saturate(418%) hue-rotate(84deg) brightness(95%) contrast(88%)"; // 초록색 근사치
-            fields.password.valid = true;
-            fields.password.msg.classList.add('ir');
-        } else {
-            fields.password.icon.src = ICON_OFF;
-            fields.password.icon.style.filter = "none";
-            fields.password.valid = false;
-        }
-        checkFormValidity();
-    });
-
-    fields.passwordConfirm.input.addEventListener('input', () => {
-        if (fields.password.input.value === fields.passwordConfirm.input.value && fields.passwordConfirm.input.value !== "") {
-            fields.passwordConfirm.icon.src = ICON_ON;
-            fields.passwordConfirm.msg.textContent = "";
-            fields.passwordConfirm.valid = true;
-            fields.passwordConfirm.msg.classList.add('ir');
-            fields.passwordConfirm.icon.style.filter = "invert(48%) sepia(87%) saturate(418%) hue-rotate(84deg) brightness(95%) contrast(88%)";
-        } else {
-            fields.passwordConfirm.icon.src = ICON_OFF;
-            showMsg(fields.passwordConfirm, "비밀번호가 일치하지 않습니다.");
-            fields.passwordConfirm.valid = false;
-            fields.passwordConfirm.icon.style.filter = "none";
-        }
-        checkFormValidity();
-    });
-
-    // 6. 사업자 번호 인증 API (판매자 전용)
-    fields.businessNum.verifyBtn?.addEventListener('click', async () => {
-        const val = fields.businessNum.input.value;
-        if (val.length !== 10) {
-            showMsg(fields.businessNum, "사업자등록번호는 10자리 숫자여야 합니다.");
-            return;
-        }
-        try {
-            const res = await fetch(`${BASE_URL}/accounts/seller/validate-registration-number/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ company_registration_number: val })
-            });
-            const data = await res.json();
-            if (res.ok) {
-                showMsg(fields.businessNum, "사용 가능한 사업자등록번호입니다.", true);
-                fields.businessNum.valid = true;
-            } else {
-                showMsg(fields.businessNum, data.error);
-                fields.businessNum.valid = false;
-            }
-        } catch (e) { console.error(e); }
-        checkFormValidity();
-    });
-
-    // 7. 폼 전체 유효성 검사 및 버튼 활성화
-    const checkFormValidity = () => {
-        const isBuyerValid = fields.username.valid && fields.password.valid && fields.passwordConfirm.valid && termsCheck.checked;
-        const isSellerValid = isBuyerValid && fields.businessNum.valid && fields.storeName.input.value.trim() !== "";
-        
-        submitBtn.disabled = !(userTypeInput.value === 'buyer' ? isBuyerValid : isSellerValid);
-    };
-
-    [termsCheck, fields.name.input, fields.storeName.input].forEach(el => el.addEventListener('change', checkFormValidity));
-
-    // 8. 최종 회원가입 제출
-    joinForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const type = userTypeInput.value;
-        const phone = `${document.getElementById('phone-prefix').value}${fields.phoneMid.input.value}${fields.phoneLast.input.value}`;
-        
-        const body = {
-            username: fields.username.input.value,
-            password: fields.password.input.value,
-            name: fields.name.input.value,
-            phone_number: phone
-        };
-
-        if (type === 'seller') {
-            body.company_registration_number = fields.businessNum.input.value;
-            body.store_name = fields.storeName.input.value;
-        }
-
-        try {
-            const res = await fetch(`${BASE_URL}/accounts/${type}/signup/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
-            });
-            if (res.ok) {
-                alert("회원가입이 완료되었습니다!");
-                location.href = "/html/login/index.html"; // 로그인 페이지로 이동
-            } else {
-                const data = await res.json();
-                alert(JSON.stringify(data));
-            }
-        } catch (e) { console.error(e); }
-    });
+// ========================================
+// 11. 초기화
+// ========================================
+document.addEventListener("DOMContentLoaded", () => {
+  loadJoinDOM();
+  eventSetting();
+  handleInputCheck(); // 초기 버튼 상태 설정
 });

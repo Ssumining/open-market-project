@@ -145,9 +145,11 @@ label[for="phone-prefix"] {
     font-size: var(--fs-md);
     color: var(--color-text-muted);
     margin-bottom: var(--space-xs);
+    margin-top:1.2rem;
 }
 
 .input-row {
+    position: relative;
     display: flex;
     gap: var(--space-sm);
     margin-bottom: var(--space-form);
@@ -160,7 +162,7 @@ label[for="phone-prefix"] {
 }
 
 input[type="password"] {
-    font-size: var(--form-pw-dots-fs) !important;
+    font-size: var(--form-pw-dots-fs);
     letter-spacing: var(--form-pw-dots-ls);
     font-family: sans-serif; 
 }
@@ -174,15 +176,17 @@ input[type="password"] {
     font-size: var(--form-fs-btn);
 }
 
-.msg-error, .msg-success {
+.msg-error, .msg-success, .error-message {
     display: block;
     margin-top: var(--form-space-msg);
+    margin-bottom: 0.8rem;
     font-size: var(--form-fs-msg); 
     line-height: 1.4rem;
     min-height: 1.6rem;
+    word-break: keep-all;
 }
 
-.msg-error {
+.msg-error, .error-message {
     color: var(--form-color-error); 
 }
 
@@ -190,15 +194,31 @@ input[type="password"] {
     color: var(--form-color-success); 
 }
 
-/* 비밀번호 체크 아이콘 상태 제어 */
 .icon-valid-check {
-    filter: var(--form-filter-disabled);
-    transition: filter 0.2s ease; 
+position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.2rem;
+    height: 2.2rem;
+    pointer-events: none;
+    z-index: 10;
+    
+    background-image: none;
+
+    /* 1. PNG 이미지 자체 색상을 살리기 위해 필터를 제거합니다 */
+    filter: none; 
+    
+    /* 2. 희미하게 보이게 했던 투명도를 1(100%)로 고정합니다 */
+    opacity: 1; 
+    
+    transition: none; /* 소스 교체 시 즉각 반영되도록 설정 */
 }
 
-/* 유효성 통과 시 클래스 추가 (JS) */
+/* 3. 유효성 검사 통과 시 상태 (JS에서 .success 클래스 추가 예정) */
 .icon-valid-check.success {
-    filter: var(--form-filter-success);
+    /* 통과 상태: icon-check-on 적용 */
+    background-image: none;
 }
 
 /* 입력창 에러 시 테두리 강조 */
