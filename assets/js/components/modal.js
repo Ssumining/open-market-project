@@ -28,7 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginConfirmBtn) {
         loginConfirmBtn.addEventListener('click', () => {
+            // 이동 전 모달 닫음
+            window.closeModal();
+            // 페이지 이동 실행
             location.href = `${rootPrefix}html/login/index.html`;
         });
     }
+
+    window.addEventListener('pageshow', (event) => {
+        // 뒤로가기로 왔을 경우 (persisted가 true일 때) 모달을 닫음
+        if (event.persisted) {
+            window.closeModal();
+        }
+    });
 });
