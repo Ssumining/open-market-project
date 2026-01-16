@@ -1,3 +1,5 @@
+import { getRootPrefix } from "../utils/path.js";
+
 window.openModal = () => {
     const modal = document.getElementById('login-modal');
     if (modal) modal.style.display = 'flex';
@@ -14,8 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeXBtn = document.getElementById('btn-modal-close');
     const modalOverlay = document.getElementById('login-modal');
 
-    const isSubPage = window.location.pathname.includes('/html/');
-    const rootPrefix = isSubPage ? '../../' : './';
+    const rootPrefix = getRootPrefix();
 
     // closeModal -> window.closeModal 호출 (통일성)
     if (cancelBtn) cancelBtn.addEventListener('click', window.closeModal);

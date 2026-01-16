@@ -1,31 +1,34 @@
-/**
- * 토큰 및 사용자 정보를 로컬 스토리지에 관리하는 유틸리티
- */
-
-// 토큰 저장 (로그인 시 사용)
-export const setToken = (access, refresh) => {
-    localStorage.setItem("accessToken", access);
-    localStorage.setItem("refreshToken", refresh);
+// 스토리지 키 정의 (상수화)
+const STORAGE_KEYS = {
+    ACCESS_TOKEN: 'accessToken',
+    USER_TYPE: 'user_type',
 };
 
-// Access Token 가져오기 (API 헤더에 넣을 때 사용)
+// 토큰 관련 유틸리티
 export const getAccessToken = () => {
-    return localStorage.getItem("accessToken");
+    return localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
 };
 
-// Refresh Token 가져오기 (토큰 갱신 시 사용)
-export const getRefreshToken = () => {
-    return localStorage.getItem("refreshToken");
+export const setToken = (token) => {
+    if (!token) return;
+    localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, token);
 };
 
-// 토큰 및 모든 인증 정보 삭제 (로그아웃 시 사용)
 export const removeToken = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user_type"); // 로그인 시 저장했던 유저 타입도 함께 삭제
+    localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.USER_TYPE);
 };
 
-// 현재 로그인 상태인지 확인 (토큰 존재 여부)
+// 사용자 정보 및 상태 유틸리티
+export const setUserType = (type) => {
+    if (!type) return;
+    localStorage.setItem(STORAGE_KEYS.USER_TYPE, type);
+};
+
+export const getUserType = () => {
+    return localStorage.getItem(STORAGE_KEYS.USER_TYPE);
+};
+
 export const isAuthenticated = () => {
-    return !!localStorage.getItem("accessToken");
+    return !!getAccessToken(); // 토큰 존재 여부를 불리언 값으로 반환
 };

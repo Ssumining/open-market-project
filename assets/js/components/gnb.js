@@ -1,3 +1,4 @@
+import { getRootPrefix } from "../utils/path.js";
 import { isAuthenticated, removeToken } from "../utils/storage.js";
 
 const initGNB = () => {
@@ -5,9 +6,7 @@ const initGNB = () => {
     if (!header) return;
 
     // 현재 페이지가 html 폴더 안에 있는지 체크 (하위 폴더 깊이 확인)
-    const isSubPage = window.location.pathname.includes('/html/');
-    const pathPrefix = isSubPage ? '../../' : './';
-    const rootPrefix = isSubPage ? '../../' : './';
+    const rootPrefix = getRootPrefix();
 
     // 1. 헤더 HTML 구조 동적 생성 (기존 HTML 복사)
     header.innerHTML = `
