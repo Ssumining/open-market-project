@@ -159,3 +159,34 @@ label[for="phone-prefix"] {
     border-radius: var(--radius-sm);
     font-size: var(--fs-xs);
 }
+
+.msg-error, .msg-success {
+    display: block;
+    margin-top: var(--form-space-msg);
+    font-size: var(--form-fs-msg); 
+    line-height: 1.4rem;
+}
+
+.msg-error {
+    color: var(--form-color-error); 
+}
+
+.msg-success {
+    color: var(--form-color-success); 
+}
+
+/* 비밀번호 체크 아이콘 상태 제어 */
+.icon-valid-check {
+    filter: var(--form-filter-disabled);
+    transition: filter 0.2s ease; 
+}
+
+/* 유효성 통과 시 클래스 추가 (JS) */
+.icon-valid-check.success {
+    filter: var(--form-filter-success);
+}
+
+/* 입력창 에러 시 테두리 강조 */
+.input-error {
+    border-color: var(--form-color-error);
+}
