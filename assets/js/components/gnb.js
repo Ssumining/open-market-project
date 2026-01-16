@@ -1,6 +1,52 @@
 import { isAuthenticated, removeToken } from "../utils/storage.js";
 
 const initGNB = () => {
+    const header = document.querySelector('header');
+    if (!header) return;
+
+    // 1. 헤더 HTML 구조 동적 생성 (기존 HTML 복사)
+    header.innerHTML = `
+        <div class="container"> 
+            <div class="logo-search-group">
+                <h1 class="logo"><a href="/index.html"><img src="/assets/images/Logo-hodu.png"></a></h1>
+                <div class="search-form">
+                    <input type="text" class="search-input" placeholder="상품을 검색해보세요!">
+                    <button class="btn-search"><img src="/assets/images/icon-search.svg"></button>
+                </div>
+            </div>
+            <div class="user-menu">
+                <button class="seller-btn" id="seller-btn">
+                    <img src="./assets/images/icon-shopping-bag.svg">
+                    <p class="seller-txt">판매자 센터</p>
+                </button>
+                <button class="cart-btn">장바구니</button> 
+                <div class="dropdown-container">
+                    <button class="login-btn" id="login-btn">
+                        <span id="user-status-login">로그인</span>
+                    </button>
+                    <div id="mypage-dropdown" class="dropdown-menu">
+                        <button type="button" id="mypage-btn" class="menu-item">마이페이지</button>
+                        <button type="button" id="logout-btn" class="menu-item">로그아웃</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="login-modal" class="modal-overlay" style="display: none;">
+            <article class="modal-content">
+                <button type="button" id="btn-modal-close" class="btn-close-x">
+                    <img src="/assets/images/icon-delete.svg" class="btn-close-x-icon" alt="닫기">
+                </button>
+                <p class="modal-text">
+                    로그인이 필요한 서비스입니다.<br>
+                    로그인 하시겠습니까?
+                </p>
+                <div class="modal-btns">
+                    <button type="button" id="btn-modal-cancel" class="btn-no">아니오</button>
+                    <button type="button" id="btn-modal-login" class="btn-yes">예</button>
+                </div>
+            </article>
+        </div>
+    `;
     const cartBtn = document.querySelector('.cart-btn'); // 구매자용 장바구니 버튼
     const sellerBtn = document.querySelector('.seller-btn'); //판매자용 판매자 센터 버튼
     const loginBtn = document.getElementById('login-btn');

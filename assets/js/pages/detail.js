@@ -1,11 +1,12 @@
-import productAPI from '../api/product.js'; // [cite: 53]
+import productAPI from '../api/product.js';
+import { getAccessToken, isAuthenticated } from '../utils/storage.js';
 
-// 1. 설정값 및 상태 관리
+// 설정값 및 상태 관리
 const MIN_QTY = 1;
 let currentProduct = null; 
 let amount = MIN_QTY;
 
-// 2. DOM 요소 선택
+// DOM 요소 선택
 const plusBtn = document.querySelector('.plus');
 const minusBtn = document.querySelector('.minus');
 const amountDisplay = document.querySelector('.current-amount');
@@ -14,7 +15,7 @@ const totalPriceDisplay = document.querySelector('.totalPrice');
 const buyBtn = document.querySelector('.M-button');
 const cartBtn = document.querySelector('.M-dark-button');
 
-// 3. UI 업데이트 함수
+// UI 업데이트 함수
 function updateUI() {
     if (!currentProduct) return;
 
@@ -30,7 +31,7 @@ function updateUI() {
     minusBtn.disabled = amount <= MIN_QTY;
 }
 
-// 4. 데이터 바인딩
+// 데이터 바인딩
 function bindProductDetail(data) {
     currentProduct = data;
 
@@ -48,32 +49,29 @@ function bindProductDetail(data) {
     document.getElementById('shipping').textContent = `${method} / ${fee}`;
 
     const img = document.querySelector('.product-image');
-    img.src = data.image;
-    img.alt = data.name;
+    if (img) {
+        img.src = data.image;
+        img.alt = data.name;
+    }
 
     updateUI();
 }
 
-// 5. 초기화 및 API 호출
+// 초기화 및 API 호출
 async function initDetailPage() {
-    // const params = new URLSearchParams(window.location.search);
-    // const productId = params.get('id');
-    // ===== 테스트를 위해 ID를 20번으로 고정 (하드코딩)
-    const productId = 2; 
+    // URL 쿼리 스트링에서 id 파라미터를 가져옴
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id'); 
 
     if (!productId) {
-        alert("상품 정보가 없습니다.");
+        alert("상품 정보가 없습니다. 메인으로 이동합니다.");
+        // 404 페이지 띄울지 고민
+        location.href = "/index.html";
         return;
     }
-
-    if (!productId) {
-        alert("상품 정보가 없습니다.");
-        return;
-    }
-    // =====
 
     try {
-        // product.js의 함수를 사용하여 데이터 호출 [cite: 237]
+        // 해당 productId의 상세 정보를 서버에서 불러옴
         const data = await productAPI.getProductDetail(productId);
         bindProductDetail(data);
     } catch (error) {
@@ -81,9 +79,38 @@ async function initDetailPage() {
     }
 }
 
-// 6. 이벤트 리스너
+function setupTabMenu() {
+    // 버튼들의 부모 요소를 선택합니다.
+    const tabHeader = document.querySelector('.product-info_header');
+    
+    if (!tabHeader) return;
+
+    // 부모 요소에 클릭 이벤트를 걸어 효율적으로 제어합니다.
+    tabHeader.addEventListener('click', (e) => {
+        // 클릭된 요소가 버튼인지 확인합니다.
+        const targetButton = e.target.closest('button');
+        if (!targetButton) return;
+
+        // 1. 모든 버튼에서 활성화 클래스를 제거하고 비활성화 클래스를 입힙니다.
+        const allButtons = tabHeader.querySelectorAll('button');
+        allButtons.forEach(btn => {
+            btn.classList.remove('tab-Activ-button');
+            btn.classList.add('tab-Disabled-button');
+        });
+
+        // 2. 현재 클릭된 버튼에만 활성화 클래스를 추가합니다.
+        targetButton.classList.add('tab-Activ-button');
+        targetButton.classList.remove('tab-Disabled-button');
+        
+        // [추가 기능] 탭에 맞는 콘텐츠를 보여주고 싶다면 여기에 로직을 추가하세요.
+        console.log(`${targetButton.textContent} 탭 클릭됨`);
+    });
+}
+
+// 이벤트 리스너
 document.addEventListener('DOMContentLoaded', () => {
     initDetailPage();
+    setupTabMenu();
 
     plusBtn?.addEventListener('click', () => {
         if (amount < currentProduct.stock) {
@@ -99,39 +126,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // 바로 구매하기
     buyBtn?.addEventListener('click', () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert("로그인이 필요한 서비스입니다.");
+        if (!isAuthenticated()) {
+            if (typeof window.openModal === 'function') window.openModal();
             return;
         }
 
-        // 주문 페이지로 필요한 데이터 전달 (예: sessionStorage 활용)
         const orderData = {
-            order_kind: 'direct_order',
             product_id: currentProduct.id,
             quantity: amount,
             total_price: (currentProduct.price * amount) + currentProduct.shipping_fee
         };
         
         sessionStorage.setItem('orderInfo', JSON.stringify(orderData));
-        window.location.href = '/order.html'; // 주문 페이지 이동
+        window.location.href = '/order.html';
     });
 
-    // 장바구니 담기 실행 [cite: 284, 286]
+    // 장바구니 담기
     cartBtn?.addEventListener('click', async () => {
-        const token = localStorage.getItem('token'); // 로그인 시 저장된 토큰 가정 [cite: 70]
-        
-        if (!token) {
-            alert("로그인이 필요한 서비스입니다."); [cite: 76]
+        if (!isAuthenticated()) {
+            // 전역 모달 함수 호출 (gnb.js/modal.js 연동)
+            if (typeof window.openModal === 'function') window.openModal();
+            return;
+        }
+
+        const userType = localStorage.getItem("user_type");
+        if (userType !== "BUYER") {
+            alert("구매자 계정으로 로그인해주세요.");
             return;
         }
 
         try {
+            const token = getAccessToken(); // storage.js 유틸리티 사용
             await productAPI.addToCart(currentProduct.id, amount, token);
-            alert("장바구니에 상품이 담겼습니다."); [cite: 288]
+            alert("장바구니에 상품이 담겼습니다.");
         } catch (error) {
-            alert(error.message); [cite: 299, 300]
+            alert(error.message);
         }
     });
 });

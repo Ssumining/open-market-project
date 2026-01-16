@@ -1,4 +1,3 @@
-// assets/js/api/auth.js
 const BASE_URL = "https://api.wenivops.co.kr/services/open-market";
 
 export const loginAPI = async (username, password) => {

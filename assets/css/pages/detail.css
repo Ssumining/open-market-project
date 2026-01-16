@@ -1,15 +1,18 @@
 /* ===== 상품 구매 요약 영역 (Top) ===== */
+.main-content .container {
+    margin-top: 8.0rem;
+    padding: 0;
+}
+
 .product-summary {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
 }
 
 .product-image {
     width: var(--product-img-size);
     height: var(--product-img-size);
-    object-fit: cover;
-    margin-right: var(--space-lg);
+    object-fit: fill;
+    margin-right: 5.0rem;
 }
 
 /* 정보 요약 컨테이너 */
@@ -17,9 +20,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* gap: 13.8rem; */
-    gap: var(--space-xxl);
-
 }
 
 .main-content .container{
@@ -32,22 +32,28 @@
 .product-meta {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.8rem;
 }
 
 .seller {
-    color: var(--color-text-muted);
-    font-size: var(--fs-lg);
+    font-family: var(--font-base);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-regular);
+    color: var(--color-dark);
 }
 
 .product-name {
-    font-size: var(--fs-xxxl);
+    font-family: var(--font-base);
+    font-size: var(--fs-xxl);
     font-weight: var(--fw-regular);
+    color: var(--color-text-base);
 }
 
 .L-price {
-    font-size: var(--fs-xxxl);
+    font-family: var(--font-base);
+    font-size: var(--fs-xxl);
     font-weight: var(--fw-bold);
+    color: var(--color-text-base);
 }
 
 .L-price::after {
@@ -57,27 +63,23 @@
     margin-left: 0.2rem;
 }
 
-.L-price.toatalPrice{
-    color: var(--color-primary, #219653); 
+.L-price.totalPrice{
+    color: var(--color-primary); 
 }
-
-
 
 /* 주문 관련 정보 (배송, 수량, 버튼) */
 .order-meta {
+    margin-top: 13.8rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-}
-
-.order-meta_label{
-    font-size: var(--fs-lg);
+    gap: 3.0rem;
 }
 
 #shipping {
-    color: var(--color-text-muted);
     font-size: var(--fs-md);
-    padding-bottom: 1rem;
+    font-weight: var(--fw-regular);
+    font-family: var(--font-base);
+    color: var(--color-text-muted);
 }
 
 .order-meta_amount {
@@ -91,14 +93,21 @@
 
 .order-meta_price-group {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     margin: 3.2rem 0 2.2rem;
+}
+
+.order-meta_label{
+    font-size: var(--fs-lg); 
+    font-weight: var(--fw-medium);
 }
 
 .price-info-wrapper{
     display: flex;
-    align-items: flex-end;
+    flex-direction: row;
+    align-items: center;
     gap: var(--space-sm);
 }
 
@@ -119,6 +128,9 @@
 }
 
 /* ===== 상품 상세 정보 탭 영역 (Bottom) ===== */
+.product-info header {
+    box-shadow: none;
+}
 .product-info_header {
     display: flex;
 }

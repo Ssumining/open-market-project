@@ -1,8 +1,22 @@
 const BASE_URL = 'https://api.wenivops.co.kr/services/open-market'; // [cite: 53, 55]-확인
 
 const productAPI = {
-    // 1. 상품 상세 정보 불러오기 (GET)
-    // 
+    // 전체 상품 목록 가져오기
+    async getAllProducts() {
+        try {
+            const response = await fetch(`${BASE_URL}/products/`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (!response.ok) throw new Error('상품 목록을 불러오지 못했습니다.');
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+
+    // 상품 상세 정보 불러오기 (GET)
     async getProductDetail(productId) {
         try {
             const response = await fetch(`${BASE_URL}/products/${productId}/`, {
@@ -23,7 +37,7 @@ const productAPI = {
         }
     },
 
-    // 2. 장바구니에 상품 넣기 (POST)
+    // 장바구니에 상품 넣기 (POST)
     // 구매자(BUYER) 계정만 가능하며 로그인 토큰이 필요합니다. [cite: 272, 284]
     async addToCart(productId, quantity, token) {
         try {
@@ -53,7 +67,7 @@ const productAPI = {
         }
     },
 
-    // 3. 바로 주문하기 생성 (POST)
+    // 바로 주문하기 생성 (POST)
     // 상세페이지에서 '바로구매' 시 사용되는 direct_order 방식입니다. [cite: 335, 338]
     async createDirectOrder(orderData, token) {
         try {
