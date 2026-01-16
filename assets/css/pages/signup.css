@@ -1,5 +1,5 @@
 .header-signup {
-    padding: var(--btn-height-main) 0; 
+    padding: var(--form-logo-padding-v) 0; 
     text-align: center;
     background-color: var(--color-bg-base);
     border-bottom: none;
@@ -130,7 +130,8 @@ label[for="phone-prefix"] {
 .signup-form input:not([type="checkbox"]), 
 .signup-form select {
     width: 100%;
-    padding: 1.7rem var(--space-md) 1.6rem;
+    height: 5.4rem;
+    padding: 0 var(--form-input-padding-h);
     line-height: normal; 
     border: 1px solid var(--color-bg-border);
     border-radius: var(--radius-sm);
@@ -152,12 +153,25 @@ label[for="phone-prefix"] {
     margin-bottom: var(--space-form);
 }
 
+.input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="password"] {
+    font-size: var(--form-pw-dots-fs) !important;
+    letter-spacing: var(--form-pw-dots-ls);
+    font-family: sans-serif; 
+}
+
 .btn-check, .btn-verify {
     width: 13.5rem;
+    height: 5.4rem;
     background-color: var(--color-primary);
     color: var(--color-text-inverse);
     border-radius: var(--radius-sm);
-    font-size: var(--fs-xs);
+    font-size: var(--form-fs-btn);
 }
 
 .msg-error, .msg-success {
@@ -165,6 +179,7 @@ label[for="phone-prefix"] {
     margin-top: var(--form-space-msg);
     font-size: var(--form-fs-msg); 
     line-height: 1.4rem;
+    min-height: 1.6rem;
 }
 
 .msg-error {
@@ -189,4 +204,13 @@ label[for="phone-prefix"] {
 /* 입력창 에러 시 테두리 강조 */
 .input-error {
     border-color: var(--form-color-error);
+}
+
+.icon-check {
+    position: absolute;
+    right: 1.5rem;
+    top: 2.7rem; /* 입력창 높이 절반 */
+    transform: translateY(-50%);
+    width: 2.2rem;
+    height: 2.2rem;
 }

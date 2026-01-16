@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const ICON_OFF = "/assets/images/icon-check-off.png";
+    const ICON_ON = "/assets/images/icon-check-on.png";
     const BASE_URL = 'https://api.wenivops.co.kr/services/open-market';
     const joinForm = document.getElementById('joinform');
     const userTypeInput = document.getElementById('usertype');
@@ -103,10 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const pwRegex = /^(?=.*[a-z])(?=.*[0-9]).{8,}$/;
         
         if (pwRegex.test(val)) {
+            fields.password.icon.src = ICON_ON;
+            fields.password.msg.textContent = "";
             fields.password.icon.style.filter = "invert(48%) sepia(87%) saturate(418%) hue-rotate(84deg) brightness(95%) contrast(88%)"; // 초록색 근사치
             fields.password.valid = true;
             fields.password.msg.classList.add('ir');
         } else {
+            fields.password.icon.src = ICON_OFF;
             fields.password.icon.style.filter = "none";
             fields.password.valid = false;
         }
@@ -115,10 +120,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fields.passwordConfirm.input.addEventListener('input', () => {
         if (fields.password.input.value === fields.passwordConfirm.input.value && fields.passwordConfirm.input.value !== "") {
+            fields.passwordConfirm.icon.src = ICON_ON;
+            fields.passwordConfirm.msg.textContent = "";
             fields.passwordConfirm.valid = true;
             fields.passwordConfirm.msg.classList.add('ir');
             fields.passwordConfirm.icon.style.filter = "invert(48%) sepia(87%) saturate(418%) hue-rotate(84deg) brightness(95%) contrast(88%)";
         } else {
+            fields.passwordConfirm.icon.src = ICON_OFF;
             showMsg(fields.passwordConfirm, "비밀번호가 일치하지 않습니다.");
             fields.passwordConfirm.valid = false;
             fields.passwordConfirm.icon.style.filter = "none";

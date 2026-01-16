@@ -149,16 +149,23 @@
 
   /* 6 . form */
   /* Form Validation Colors */
-    --form-color-success: var(--color-primary); 
-    --form-color-error: var(--form-color-error, #EB5757); 
+    --form-color-success: #21BF48; 
+    --form-color-error: #EB5757; 
     
   /* Form Validation Typography */
-    --form-fs-msg: var(--fs-xs); 
+    --form-fs-msg: 1.4rem; 
+    --form-fs-btn: 1.4rem;
     
   /* Form Validation Spacing */
-    --form-space-msg: 0.6rem;
+    --form-space-msg: 0.8rem;
+    --form-input-padding-h: 1.5rem;
+    --form-logo-padding-v: 4.0rem;
     
   /* Form Validation Icons (Filter) */
     --form-filter-success: invert(48%) sepia(87%) saturate(418%) hue-rotate(84deg) brightness(95%) contrast(88%);
     --form-filter-disabled: grayscale(100%) opacity(0.2);
+
+  /* 7 . Password Field Spec */
+    --form-pw-dots-fs: 2.4rem; /* 비밀번호 점 크기 */
+    --form-pw-dots-ls: 0.4rem; /* 비밀번호 점 간격 */
 }
