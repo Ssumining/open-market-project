@@ -66,7 +66,7 @@ async function initDetailPage() {
     if (!productId) {
         alert("상품 정보가 없습니다. 메인으로 이동합니다.");
         // 404 페이지 띄울지 고민
-        location.href = "/index.html";
+        location.href = "./index.html";
         return;
     }
 

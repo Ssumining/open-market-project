@@ -8,10 +8,10 @@ const initGNB = () => {
     header.innerHTML = `
         <div class="container"> 
             <div class="logo-search-group">
-                <h1 class="logo"><a href="/index.html"><img src="/assets/images/Logo-hodu.png"></a></h1>
+                <h1 class="logo"><a href="./index.html"><img src="./assets/images/Logo-hodu.png"></a></h1>
                 <div class="search-form">
                     <input type="text" class="search-input" placeholder="상품을 검색해보세요!">
-                    <button class="btn-search"><img src="/assets/images/icon-search.svg"></button>
+                    <button class="btn-search"><img src="./assets/images/icon-search.svg"></button>
                 </div>
             </div>
             <div class="user-menu">
@@ -34,7 +34,7 @@ const initGNB = () => {
         <div id="login-modal" class="modal-overlay" style="display: none;">
             <article class="modal-content">
                 <button type="button" id="btn-modal-close" class="btn-close-x">
-                    <img src="/assets/images/icon-delete.svg" class="btn-close-x-icon" alt="닫기">
+                    <img src="./assets/images/icon-delete.svg" class="btn-close-x-icon" alt="닫기">
                 </button>
                 <p class="modal-text">
                     로그인이 필요한 서비스입니다.<br>
@@ -92,14 +92,14 @@ const initGNB = () => {
             if (!isLoggedIn) {
                 if (typeof openModal === 'function') openModal(); 
             } else {
-                location.href = '/cart/index.html';
+                location.href = './cart/index.html';
             }
         });
     }
 
     if (sellerBtn) {
         sellerBtn.addEventListener('click', () => {
-            location.href = '/seller-center/index.html'; // 판매자 센터 경로
+            location.href = './seller-center/index.html'; // 판매자 센터 경로
         });
     }
 
@@ -109,7 +109,7 @@ const initGNB = () => {
             e.stopPropagation();
             if (!isLoggedIn) {
                 // 실제 로그인은 login.html 페이지 내 로직에서 처리됨
-                location.href = '/html/login/index.html';
+                location.href = './html/login/index.html';
             } else {
                 const isShowing = dropdownMenu.classList.toggle('show');
                 loginBtn.classList.toggle('active', isShowing);
@@ -120,7 +120,7 @@ const initGNB = () => {
 
         if (mypageBtn) {
             mypageBtn.addEventListener('click', () => {
-                location.href = '/mypage/index.html'; 
+                location.href = './mypage/index.html'; 
             });
         }
 

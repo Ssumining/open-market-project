@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginConfirmBtn) {
         loginConfirmBtn.addEventListener('click', () => {
-            location.href = '/html/login/index.html';
+            location.href = './html/login/index.html';
         });
     }
 });

@@ -1,8 +1,6 @@
 import productAPI from '../api/product.js';
 
-/* ============================================================
-   1. 상품 목록 렌더링 (Product List)
-   ============================================================ */
+// 상품 목록 렌더링
 async function renderMainProducts() {
     const productList = document.querySelector('.product-list');
     if (!productList) return;
@@ -41,9 +39,8 @@ async function renderMainProducts() {
     }
 }
 
-/* ============================================================
-   2. 메인 슬라이더 (Main Visual Slider)
-   ============================================================ */
+
+// 2. 메인 슬라이더 (Main Visual Slider)
 function initSlider() {
     const sliderList = document.querySelector('.slider-list');
     const slides = document.querySelectorAll('.main-visual');
@@ -111,9 +108,8 @@ function initSlider() {
     startAutoSlide();
 }
 
-/* ============================================================
-   3. 초기화 실행 (DOMContentLoaded)
-   ============================================================ */
+
+// 초기화 실행 (DOMContentLoaded)
 document.addEventListener('DOMContentLoaded', () => {
     renderMainProducts();
     initSlider();

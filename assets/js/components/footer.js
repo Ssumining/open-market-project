@@ -19,9 +19,9 @@ const renderFooter = () => {
                     <li><a href="#">제휴문의</a></li>
                 </ul>
                 <ol class="sns-links">
-                    <li><button type="button"><img src="/assets/images/icon-insta.svg" alt="인스타그램"></button></li>
-                    <li><button type="button"><img src="/assets/images/icon-fb.svg" alt="페이스북"></button></li>
-                    <li><button type="button"><img src="/assets/images/icon-yt.svg" alt="유튜브"></button></li>
+                    <li><button type="button"><img src="./assets/images/icon-insta.svg" alt="인스타그램"></button></li>
+                    <li><button type="button"><img src="./assets/images/icon-fb.svg" alt="페이스북"></button></li>
+                    <li><button type="button"><img src="./assets/images/icon-yt.svg" alt="유튜브"></button></li>
                 </ol>
             </div>
 
