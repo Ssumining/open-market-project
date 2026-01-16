@@ -1,106 +1,92 @@
-// 1. 설정값 (상수)
-const MAX_QTY = 10;
+import productAPI from '../api/product.js'; // [cite: 53]
+
+// 1. 설정값 및 상태 관리
 const MIN_QTY = 1;
-const UNIT_PRICE = 17500; 
+let currentProduct = null; 
+let amount = MIN_QTY;
 
-// 2. 초기 상태
-let amount = MIN_QTY; 
-
-// 3. DOM 요소 선택
+// 2. DOM 요소 선택
 const plusBtn = document.querySelector('.plus');
 const minusBtn = document.querySelector('.minus');
 const amountDisplay = document.querySelector('.current-amount');
-const quantity = document.querySelector('.quantity');
-const receipt = document.querySelector('.totalPrice'); 
-const tabHeader = document.querySelector('.product-info_header');
+const quantityDisplay = document.querySelector('.quantity');
+const totalPriceDisplay = document.querySelector('.totalPrice');
+const buyBtn = document.querySelector('.M-button');
+const cartBtn = document.querySelector('.M-dark-button');
 
-// 4. UI 업데이트 함수
+// 3. UI 업데이트 함수
 function updateUI() {
-    // 수량 텍스트 업데이트
-    if (amountDisplay) amountDisplay.innerText = amount;
-    if (quantity) quantity.innerText = amount;
+    if (!currentProduct) return;
+
+    amountDisplay.innerText = amount;
+    quantityDisplay.innerText = amount;
     
-    // 총 금액 계산 및 업데이트
-    if (receipt) {
-        const totalPrice = amount * UNIT_PRICE;
-        receipt.textContent = totalPrice.toLocaleString();
-    }
+    // 총 금액 계산: (가격 * 수량) + 배송비 [cite: 374, 375]
+    const total = (currentProduct.price * amount) + currentProduct.shipping_fee;
+    totalPriceDisplay.textContent = total.toLocaleString();
 
-    // 버튼 비활성화 제어
-    const isMax = amount >= MAX_QTY;
-    const isMin = amount <= MIN_QTY;
-
-    if (plusBtn) {
-        plusBtn.disabled = isMax;
-        plusBtn.classList.toggle('is-disabled', isMax);
-    }
-    if (minusBtn) {
-        minusBtn.disabled = isMin;
-        minusBtn.classList.toggle('is-disabled', isMin);
-    }
+    // 재고 기반 버튼 활성화 제어 [cite: 234]
+    plusBtn.disabled = amount >= currentProduct.stock;
+    minusBtn.disabled = amount <= MIN_QTY;
 }
 
-// 5. 데이터 바인딩 함수들
-function bindSeller(name) {
-    const seller = document.querySelector('.seller');
-    if (seller) seller.textContent = name;
-}
+// 4. 데이터 바인딩
+function bindProductDetail(data) {
+    currentProduct = data;
 
-function bindProductName(name) {
-    const productName = document.querySelector('.product-name');
-    const seoProductName = document.getElementById('seo-product-name');
-    if (productName) productName.textContent = name;
-    if (seoProductName) seoProductName.textContent = name;
-}
+    document.querySelector('.seller').textContent = data.seller.store_name;
+    document.querySelector('.product-name').textContent = data.name;
+    document.getElementById('seo-product-name').textContent = data.name;
 
-function bindPrice(price) {
-    const lPriceList = document.querySelectorAll('.L-price');
-    lPriceList.forEach((el) => {
-        el.innerHTML = `<span class="L-price_value">${price.toLocaleString()}</span>`;
-    });
-}
+    // 단가 설정
+    const unitPrice = document.querySelector('.L-price:not(.totalPrice)');
+    if (unitPrice) unitPrice.innerHTML = `<span class="L-price_value">${data.price.toLocaleString()}</span>`;
 
-function bindShipping(method, fee) {
-    const shipping = document.getElementById('shipping');
-    if (shipping) shipping.textContent = `${method} / ${fee}`;
-}
+    // 배송 정보 [cite: 205, 206, 207]
+    const method = data.shipping_method === 'PARCEL' ? '택배배송' : '직접배송';
+    const fee = data.shipping_fee === 0 ? '무료배송' : `${data.shipping_fee.toLocaleString()}원`;
+    document.getElementById('shipping').textContent = `${method} / ${fee}`;
 
-function bindImage(url) {
-    const img = document.querySelector('.product-image_main');
-    if (img) {
-        img.src = url;
-        img.alt = '상품이미지';
-    }
-}
+    const img = document.querySelector('.product-image');
+    img.src = data.image;
+    img.alt = data.name;
 
-// 6. 초기화 함수
-function initDetailPage() {
-    // 임시 데이터 (추후 API 데이터로 대체)
-    const productData = {
-        seller: '백엔드글로벌',
-        name: '딥러닝 개발자 무릎 담요',
-        price: UNIT_PRICE,
-        shippingMethod: '택배배송',
-        shippingFee: '무료배송',
-        imageUrl: 'https://via.placeholder.com/400' // 임시 이미지 URL
-    };
-
-    bindSeller(productData.seller);
-    bindProductName(productData.name);
-    bindPrice(productData.price);
-    bindShipping(productData.shippingMethod, productData.shippingFee);
-    bindImage(productData.imageUrl);
-    
     updateUI();
 }
 
-// 7. 이벤트 리스너 등록
+// 5. 초기화 및 API 호출
+async function initDetailPage() {
+    // const params = new URLSearchParams(window.location.search);
+    // const productId = params.get('id');
+    // ===== 테스트를 위해 ID를 20번으로 고정 (하드코딩)
+    const productId = 2; 
+
+    if (!productId) {
+        alert("상품 정보가 없습니다.");
+        return;
+    }
+
+    if (!productId) {
+        alert("상품 정보가 없습니다.");
+        return;
+    }
+    // =====
+
+    try {
+        // product.js의 함수를 사용하여 데이터 호출 [cite: 237]
+        const data = await productAPI.getProductDetail(productId);
+        bindProductDetail(data);
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+// 6. 이벤트 리스너
 document.addEventListener('DOMContentLoaded', () => {
     initDetailPage();
 
-    // 수량 조절 버튼 이벤트
     plusBtn?.addEventListener('click', () => {
-        if (amount < MAX_QTY) {
+        if (amount < currentProduct.stock) {
             amount++;
             updateUI();
         }
@@ -112,19 +98,40 @@ document.addEventListener('DOMContentLoaded', () => {
             updateUI();
         }
     });
-
-    // 탭 헤더 클릭 이벤트 (이벤트 위임)
-    tabHeader?.addEventListener('click', (e) => {
-        const target = e.target.closest('button');
-        if (!target) return;
-
-        const currentActive = tabHeader.querySelector('.tab-Activ-button');
-        if (currentActive) {
-            currentActive.classList.remove('tab-Activ-button');
-            currentActive.classList.add('tab-Disabled-button');
+    
+    buyBtn?.addEventListener('click', () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert("로그인이 필요한 서비스입니다.");
+            return;
         }
 
-        target.classList.add('tab-Activ-button');
-        target.classList.remove('tab-Disabled-button');
+        // 주문 페이지로 필요한 데이터 전달 (예: sessionStorage 활용)
+        const orderData = {
+            order_kind: 'direct_order',
+            product_id: currentProduct.id,
+            quantity: amount,
+            total_price: (currentProduct.price * amount) + currentProduct.shipping_fee
+        };
+        
+        sessionStorage.setItem('orderInfo', JSON.stringify(orderData));
+        window.location.href = '/order.html'; // 주문 페이지 이동
+    });
+
+    // 장바구니 담기 실행 [cite: 284, 286]
+    cartBtn?.addEventListener('click', async () => {
+        const token = localStorage.getItem('token'); // 로그인 시 저장된 토큰 가정 [cite: 70]
+        
+        if (!token) {
+            alert("로그인이 필요한 서비스입니다."); [cite: 76]
+            return;
+        }
+
+        try {
+            await productAPI.addToCart(currentProduct.id, amount, token);
+            alert("장바구니에 상품이 담겼습니다."); [cite: 288]
+        } catch (error) {
+            alert(error.message); [cite: 299, 300]
+        }
     });
 });
