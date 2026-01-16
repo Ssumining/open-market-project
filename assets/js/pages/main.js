@@ -28,7 +28,7 @@ async function renderMainProducts() {
             
             // 클릭 시 상세 페이지로 이동 (쿼리 스트링 id 전달)
             productItem.addEventListener('click', () => {
-                location.href = `/html/products/detail.html?id=${product.id}`;
+                location.href = `./html/products/detail.html?id=${product.id}`;
             });
 
             productList.appendChild(productItem);

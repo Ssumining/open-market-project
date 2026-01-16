@@ -40,7 +40,7 @@ loginForm.addEventListener("submit", async (e) => {
         if (prevPage && !prevPage.includes("login")) {
             location.href = prevPage;
         } else {
-            location.href = "../../../index.html";
+            location.href = "../../index.html";
         }
 
     } catch (error) {

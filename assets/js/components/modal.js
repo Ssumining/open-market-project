@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeXBtn = document.getElementById('btn-modal-close');
     const modalOverlay = document.getElementById('login-modal');
 
+    const isSubPage = window.location.pathname.includes('/html/');
+    const rootPrefix = isSubPage ? '../../' : './';
+
     // closeModal -> window.closeModal 호출 (통일성)
     if (cancelBtn) cancelBtn.addEventListener('click', window.closeModal);
     if (closeXBtn) closeXBtn.addEventListener('click', window.closeModal);
@@ -25,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginConfirmBtn) {
         loginConfirmBtn.addEventListener('click', () => {
-            location.href = './html/login/index.html';
+            location.href = '${rootPrefix}html/login/index.html';
         });
     }
 });

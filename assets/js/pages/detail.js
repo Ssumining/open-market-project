@@ -15,6 +15,9 @@ const totalPriceDisplay = document.querySelector('.totalPrice');
 const buyBtn = document.querySelector('.M-button');
 const cartBtn = document.querySelector('.M-dark-button');
 
+const isSubPage = window.location.pathname.includes('/html/');
+const rootPrefix = isSubPage ? '../../' : './';
+
 // UI 업데이트 함수
 function updateUI() {
     if (!currentProduct) return;
@@ -66,7 +69,7 @@ async function initDetailPage() {
     if (!productId) {
         alert("상품 정보가 없습니다. 메인으로 이동합니다.");
         // 404 페이지 띄울지 고민
-        location.href = "./index.html";
+        location.href = "${rootPrefix}index.html";
         return;
     }
 
@@ -140,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         sessionStorage.setItem('orderInfo', JSON.stringify(orderData));
-        window.location.href = '/order.html';
+        window.location.href = '${rootPrefix}seller/order.html';
     });
 
     // 장바구니 담기
