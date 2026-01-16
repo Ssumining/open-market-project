@@ -18,6 +18,32 @@
     color: var(--color-text-muted);
 }
 
+.seller-btn {
+    display: none; 
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-xs);
+    padding: 1.1rem 2rem;
+
+    cursor: pointer;
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-primary);
+}
+
+.seller-btn:hover {
+    background-color: var(--color-primary-hover); 
+}
+
+.seller-txt {
+    font-family: var(--font-base);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-fixed-lg);
+    color: var(--color-text-inverse);
+}
+
 .cart-btn,
 .login-btn {
     display: flex;

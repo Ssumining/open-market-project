@@ -17,6 +17,7 @@
     --fs-xs: 1.2rem;
     --fs-sm: 1.4rem;
     --fs-md: 1.6rem;
+    --fs-fixed-lg: 1.8rem;
 
   /* 모바일 포함 */
     --fs-lg: clamp(1.8rem, 4vw, 2.2rem);
@@ -42,7 +43,14 @@
     --color-primary: #21BF48; 
     --color-primary-hover: #1EAB40; /* 인터랙션 변수(마우스) */
     --color-primary-active: #178A33; /* (클릭) */
+    --color-dark: #767676;
+    --color-dark-hover: #616161;  /* 조금 더 어둡게 */
+    --color-dark-active: #4B4B4B; /* 확실히 어둡게 (클릭 효과) */
     --color-error: #EB5757; 
+
+    /* border color */
+    --color-bg-border: rgba(196, 196, 196, 1);
+    --color-tab-border: #E0E0E0;
 
   /* 3. layout&spacing */
   /* Container width */
@@ -55,6 +63,7 @@
     --space-md: clamp(2.0rem, 2.5vw, 3.2rem); /*섹션 내 요소*/
     --space-lg: clamp(4.0rem, 5vw, 8.0rem); /*섹션 사이 간격*/
     --space-xl: clamp(8.0rem, 8vw, 12.0rem);
+    --space-xxl: clamp(12.0rem, 10vw, 16.0rem);
 
   /* Border radius */
   --radius-sm: 0.5rem; /*버튼 및 입력창*/
@@ -124,5 +133,7 @@
 
   /* radius */
     --btn-radius: var(--radius-md);
-
+  
+  /* product img size */
+  --product-img-size: 60rem; /*레이아웃 기준 사이즈*/
 }
