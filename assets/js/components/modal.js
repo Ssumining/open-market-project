@@ -1,3 +1,5 @@
+import { getRootPrefix } from "../utils/path.js";
+
 window.openModal = () => {
     const modal = document.getElementById('login-modal');
     if (modal) modal.style.display = 'flex';
@@ -14,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeXBtn = document.getElementById('btn-modal-close');
     const modalOverlay = document.getElementById('login-modal');
 
+    const rootPrefix = getRootPrefix();
+
     // closeModal -> window.closeModal 호출 (통일성)
     if (cancelBtn) cancelBtn.addEventListener('click', window.closeModal);
     if (closeXBtn) closeXBtn.addEventListener('click', window.closeModal);
@@ -25,7 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginConfirmBtn) {
         loginConfirmBtn.addEventListener('click', () => {
-            location.href = '/html/login/index.html';
+            // 이동 전 모달 닫음
+            window.closeModal();
+            // 페이지 이동 실행
+            location.href = `${rootPrefix}html/login/index.html`;
         });
     }
+
+    window.addEventListener('pageshow', (event) => {
+        // 뒤로가기로 왔을 경우 (persisted가 true일 때) 모달을 닫음
+        if (event.persisted) {
+            window.closeModal();
+        }
+    });
 });

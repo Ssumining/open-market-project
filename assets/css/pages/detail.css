@@ -193,11 +193,11 @@
 }
 
 .minus::before{
-    background-image: url('/assets/images/icon-minus-line.svg');
+    background-image: var(--icon-minus-line);
 }
 
 .plus::before{
-    background-image: url('/assets/images/icon-plus-line.svg');
+    background-image: var(--icon-plus-line);
 }
 
 .minus:hover,
@@ -206,11 +206,11 @@
 }
 
 .minus:active::before{
-    background-image: url('/assets/images/icon-minus-line_disabled.svg');
+    background-image: var(--icon-minus-line_disabled);
 }
 
 .plus:active::before{
-    background-image: url('/assets/images/icon-plus-line_disabled.svg');
+    background-image: var(--icon-plus-line_disabled);
 }
 
 .current-amount{
@@ -232,7 +232,7 @@
 }
 
 .minus.is-disabled::before{
-    background-image: url('/assets/images/icon-minus-line_disabled.svg');
+    background-image: var(--icon-minus-line_disabled);
 }
 
 .plus.is-disabled{
@@ -241,7 +241,7 @@
 }
 
 .plus.is-disabled::before{
-    background-image: url('/assets/images/icon-plus-line_disabled.svg');
+    background-image: var(--icon-plus-line_disabled);
 }
 
 .totalAmount,
