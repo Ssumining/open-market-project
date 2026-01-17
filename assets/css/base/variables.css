@@ -3,7 +3,7 @@
 :root{
 
   /* 1. Typography */
-    /* font-familly */
+    /* font-family */
     --font-base:'SpoqaHanSansNeo', sans-serif;
 
   /* font-weight */
@@ -13,49 +13,57 @@
 
   /* font-size 가변 타이포 방식 clamp(최소 크기, 가변 크기, 최대 크기) */
 
-  /*본문 크기 고정*/
+  /*font size 고정*/
     --fs-xs: 1.2rem;
     --fs-sm: 1.4rem;
     --fs-md: 1.6rem;
-    --fs-fixed-lg: 1.8rem;
+    --fs-lg: 1.8rem;
 
-  /* 모바일 포함 */
-    --fs-lg: clamp(1.8rem, 4vw, 2.2rem);
-    --fs-xl: clamp(2.2rem, 5vw, 2.4rem);
-    --fs-xxl: clamp(2.8rem, 6vw, 3.6rem);
-    --fs-xxxl: clamp(3.2rem, 8vw, 4.8rem);
+  /* 반응형 */
+    --fs-xl: clamp(1.8rem, 4vw, 2.2rem);
+    --fs-2xl: clamp(2.2rem, 5vw, 2.4rem);
+    --fs-3xl: clamp(2.8rem, 6vw, 3.6rem);
+    --fs-4xl: clamp(3.2rem, 8vw, 4.8rem);
 
-  /* 2. color system */
+  /* 2. colors */
 
-  /* text colors */
-    --color-text-base:#000000;
-    --color-text-main: #333333; /* 일반적인 본문 및 링크 텍스트용 */
+  /* brand colors */
+    --color-primary: #21BF48; 
+    --color-primary-hover: #1EAB40; /* 인터랙션 변수(마우스) */
+    --color-primary-active: #178A33; /* (클릭) */
+
+    /*text colors*/
+    --color-text-primary:#000000;
+    --color-text-secondary: #333333; /* 일반적인 본문 및 링크 텍스트용 */
     --color-text-inverse: #FFFFFF; /*초록색 배경용*/
     --color-text-accent:#FF0000; /*강조*/
     --color-text-muted:#767676; /*보조 설명*/
     
   /* background colors */
-    --color-bg-base: #FFFFFF; 
+    --color-bg-primary: #FFFFFF; 
     --color-bg-secondary: #F2F2F2; /*푸터 및 구분 섹션 배경*/
-    --color-bg-dim:rgba(0, 0, 0, 0.6); /*뒷배경*/
-    --color-bg-border: #C4C4C4; /*보더*/
+    --color-bg-overlay:rgba(0, 0, 0, 0.6); /*뒷배경*/
 
-    --color-primary: #21BF48; 
-    --color-primary-hover: #1EAB40; /* 인터랙션 변수(마우스) */
-    --color-primary-active: #178A33; /* (클릭) */
+    /*border colors*/
+    --color-border-primary: #C4C4C4; /*보더*/
+    --color-border-light: #E0E0E0;
+
+    /* State Colors */
+    --color-success: #21BF48;
+    --color-error: #EB5757;
+
+    /*dark*/
     --color-dark: #767676;
     --color-dark-hover: #616161;  /* 조금 더 어둡게 */
     --color-dark-active: #4B4B4B; /* 확실히 어둡게 (클릭 효과) */
-    --color-error: #EB5757; 
 
-    /* border color */
-    --color-bg-border: rgba(196, 196, 196, 1);
-    --color-tab-border: #E0E0E0;
-
-  /* 3. layout&spacing */
-  /* Container width */
+  /* 3. layout & spacing */
+  /* Container */
     --container-width: 1280px;
-    --container-padding: clamp(2.0rem, 5vw, 2.2rem);
+    --container-padding: clamp(--space-container);
+
+    --space-section: clamp(4.0rem, 5vw, 8.0rem);
+    --space-container: clamp(2.0rem, 5vw, 2.2rem);
 
   /* Spacing System */
     --space-xs: 0.8rem;
@@ -66,16 +74,18 @@
     --space-xl: clamp(8.0rem, 8vw, 12.0rem);
     --space-xxl: clamp(12.0rem, 10vw, 16.0rem);
 
-  /* Border radius */
-  --radius-sm: 0.5rem; /*버튼 및 입력창*/
-  --radius-form: 1.0rem; 
-  --radius-ms: 1.6rem; /*버튼*/
-  --radius-md: 1.8rem; /*컨테이너, 상품 카드*/
-  --radius-lg: 3.0rem; /*모달 및 배너*/
+    /* Border radius */
+    --radius-xs: 0.4rem;
+    --radius-sm: 0.5rem; /*버튼 및 입력창*/
+    --radius-md: 1.0rem; 
+    -radius-lg: 1.6rem; /*버튼*/
+    --radius-xl: 1.8rem; /*컨테이너, 상품 카드*/
+    --radius-2xl: 3.0rem; /*모달 및 배너*/
+    --radius-full: 50%;    /* 원형 */
 
-  /* 4. Icon assets */
-  /* Icon 단축어 */;
-    --icon-404: url('/assets/images/icon-404.png');
+  /* 4. Icon */
+  /* Icon 단축어 */
+    --icon-404: url('/assets/images/icon-404.svg');
     --icon-fb: url('../../images/icon-fb.svg');
     --icon-insta: url('../../images/icon-insta.svg');
     --icon-yt: url('../../images/icon-yt.svg');
@@ -113,62 +123,57 @@
     --icon-img: url('../../images/icon-img.svg');
 
   /* Icon-size 가변 타이포 방식*/
-    --icon-size-sm: clamp(1.4rem, 2vw, 1.6rem); 
-    --icon-size-md: clamp(2.0rem, 4vw, 2.4rem); /* HODU 메인 아이콘 규격 */
-    --icon-size-lg: clamp(2.4rem, 5vw, 3.2rem);
+    --icon-sm: clamp(1.4rem, 2vw, 1.6rem); 
+    --icon-md: clamp(2.0rem, 4vw, 2.4rem); /* HODU 메인 아이콘 규격 */
+    --icon-lg: clamp(2.4rem, 5vw, 3.2rem);
 
     --logo-size-signup: 23.0rem; 
 
-  /* Icon Interaction */
+  /* Icon filter */
     --icon-filter-hover: brightness(0.8); /* 마우스 */
     --icon-filter-active: brightness(0.6); /* 클릭 */
-    --icon-filter-white: brightness(0) invert(1); /* 어두운 배경용 */
+    --icon-filter-inverse: brightness(0) invert(1); /* 어두운 배경용 */
 
   /* Icon Spacing */
     --icon-gap-sm: 0.4rem;
     --icon-gap-md: 0.8rem;
 
   /* 5. Button */
-
   /* button text size */
     --btn-fs: clamp(1.4rem, 2vw, 1.8rem); 
 
-  /* padding */
+  /* button padding */
     --btn-padding-v: 1.2rem;
     --btn-padding-tab-t: 1.8rem;  
     --btn-padding-tab-b: 2.5rem;  
     --btn-padding-h: clamp(1.6rem, 5vw, 4.0rem);
 
-  /* button width&height */
+  /* button size */
     --btn-min-width: clamp(8.0rem, 15vw, 12.0rem);
     --btn-height-main : clamp(6.0rem, 8vw, 8.0rem); /*강조되는 메인 버튼 사용*/
     --btn-height: clamp(4.0rem, 6vw, 6.0rem); /*호두 기준*/
 
-  /* radius */
+  /* button radius */
     --btn-radius: var(--radius-md);
   
-  /* product img size */
+  /* 6 . product */
     --product-img-size: 60rem; /*레이아웃 기준 사이즈*/
 
-  /* 6 . form */
-  /* Form Validation Colors */
-    --form-color-success: #21BF48; 
-    --form-color-error: #EB5757; 
-    
+  /* 7 . form */
   /* Form Validation Typography */
     --form-fs-msg: 1.4rem; 
     --form-fs-btn: 1.4rem;
     
-  /* Form Validation Spacing */
+  /* Form Spacing */
     --form-space-msg: 0.8rem;
     --form-input-padding-h: 1.5rem;
     --form-logo-padding-v: 4.0rem;
     
-  /* Form Validation Icons (Filter) */
+  /* Form Icons Filter */
     --form-filter-success: invert(48%) sepia(87%) saturate(418%) hue-rotate(84deg) brightness(95%) contrast(88%);
     --form-filter-disabled: grayscale(100%) opacity(0.2);
 
-  /* 7 . Password Field Spec */
+  /* 7 . Password Field */
     --form-pw-dots-fs: 2.4rem; /* 비밀번호 점 크기 */
     --form-pw-dots-ls: 0.4rem; /* 비밀번호 점 간격 */
 }
