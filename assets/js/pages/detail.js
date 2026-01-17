@@ -28,8 +28,14 @@ function updateUI() {
     const total = (currentProduct.price * amount) + currentProduct.shipping_fee;
     totalPriceDisplay.textContent = total.toLocaleString();
 
+    const isPlusDisabled = amount >= currentProduct.stock;
+    const isMinusDisabled = amount <= MIN_QTY;
+
     plusBtn.disabled = amount >= currentProduct.stock;
     minusBtn.disabled = amount <= MIN_QTY;
+
+    plusBtn.classList.toggle('is-disabled', isPlusDisabled);
+    minusBtn.classList.toggle('is-disabled', isMinusDisabled);
 }
 
 // 서버 데이터를 화면 요소에 바인딩
