@@ -76,7 +76,7 @@
     --icon-fb: url('../../images/icon-fb.svg');
     --icon-insta: url('../../images/icon-insta.svg');
     --icon-yt: url('../../images/icon-yt.svg');
-    --logo-hodu: url('../../images/Logo-hodu.png');
+    --logo-hodu: url('../../images/Logo-hodu.svg');
 
     --icon-search: url('../../images/icon-search.svg');
     --icon-cart: url('../../images/icon-shopping-cart.svg');
@@ -93,19 +93,21 @@
     --icon-up-arrow: url('../../images/icon-up-arrow.svg');
     --icon-right-arrow: url('../../images/icon-right-arrow.svg');
     --icon-swiper-1: url('../../images/icon-swiper-1.svg');
-    --icon-swiper-1_hover: url('../../images/icon-swiper-1_hover.png');
-    --icon-swiper-1_active: url('../../images/icon-swiper-1_active.png');
+    --icon-swiper-1_hover: url('../../images/icon-swiper-1_hover.svg');
+    --icon-swiper-1_active: url('../../images/icon-swiper-1_active.svg');
     --icon-swiper-2: url('../../images/icon-swiper-2.svg');
-    --icon-swiper-2_hover: url('../../images/icon-swiper-2_hover.png');
-    --icon-swiper-2_active: url('../../images/icon-swiper-2_active.png');
+    --icon-swiper-2_hover: url('../../images/icon-swiper-2_hover.svg');
+    --icon-swiper-2_active: url('../../images/icon-swiper-2_active.svg');
 
     --icon-user: url('../../images/icon-user.svg');
     --icon-user-2: url('../../images/icon-user-2.svg');
     --icon-delete: url('../../images/icon-delete.svg');
     --icon-plus: url('../../images/icon-plus.svg');
     --icon-plus-line: url('../../images/icon-plus-line.svg');
+    --icon-plus-line_disabled: url('../../images//icon-plus-line_disabled.svg');
     --icon-minus-line: url('../../images/icon-minus-line.svg');
-    --icon-img: url('../../images/icon-img.png');
+    --icon-minus-line_disabled: url('../../images/icon-minus-line_disabled.svg');
+    --icon-img: url('../../images/icon-img.svg');
 
   /* Icon-size 가변 타이포 방식*/
     --icon-size-sm: clamp(1.4rem, 2vw, 1.6rem); 

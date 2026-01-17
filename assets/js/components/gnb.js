@@ -14,7 +14,7 @@ const initGNB = () => {
             <div class="logo-search-group">
                 <h1 class="logo">
                     <a href="${rootPrefix}index.html">
-                        <img src="${rootPrefix}assets/images/Logo-hodu.png">
+                        <img src="${rootPrefix}assets/images/Logo-hodu.svg">
                     </a>
                 </h1>
                 <div class="search-form">
