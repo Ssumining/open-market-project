@@ -1,46 +1,95 @@
 /*공통 ui 정의, 공통 인터랙션 버튼 제작*/
 
+/*기초 UI 컴포넌트*/
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-base);
+    font-weight: var(--fw-bold);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.btn-primary:active {
+    background-color: var(--color-primary-active);
+}
+
+.btn-secondary {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-primary); 
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-bg-secondary);
+}
+
+.form-input {
+    width: 100%;
+    height: var(--form-input-height); 
+    padding: 0 var(--form-input-padding-h); 
+    font-size: var(--fs-md);
+    border: 1px solid var(--color-border-primary); 
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.msg-error,
+.msg-success {
+    display: block;
+    margin-top: var(--form-msg-gap);
+    font-size: var(--form-fs-msg); 
+    line-height: 1.4;
+}
+
+.msg-error {
+    color: var(--color-error);
+}
+
+.msg-success {
+    color: var(--color-success);
+}
+
+/*기능별 UI 컴포넌트*/
 .search-form {
     border: 2px solid var(--color-primary);
-    border-radius: var(--radius-lg);
-    background-color: var(--color-bg-base);
+    border-radius: var(--radius-2xl);
+    background-color: var(--color-bg-primary);
 }
 
 .btn-search {
     cursor: pointer;
-    transition: filter 0.2s ease; /*부드러운*/
+    transition: filter var(--transition-base); /*부드러운*/
 }
 
 .btn-search:hover {
     filter: var(--icon-filter-hover);
 }
 
-.btn-prev, .btn-next {
-    cursor: pointer;
-    background-color: transparent;
-    transition: filter 0.2s ease;
-}
-
-/*배너*/
-.btn-prev:hover, .btn-next:hover {
-    filter: var(--icon-filter-hover); /*화살표 아이콘 호버 효과*/
-}
-
-.pagination li {
-    border-radius: 50%;
-    background-color: var(--color-bg-base);
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-/*활성화된 페이지 점 스타일*/
-.pagination li.on {
-    background-color: var(--color-text-base); /*활성화된 점은 검은색*/
-}
-
 .product-card {
     cursor: pointer;
-    transition: transform 0.2s ease; /*카드 리프트*/
+    transition: transform var(--transition-base); /*카드 리프트*/
 }
 
 .product-card:hover {
@@ -48,7 +97,7 @@
 }
 
 .product-img {
-    border-radius: var(--radius-md); 
+    border-radius: var(--radius-xl); 
     border: 1px solid var(--color-bg-secondary);
 }
 
@@ -59,10 +108,36 @@
 
 .product-info .product-name {
     font-size: var(--fs-md);
-    color: var(--color-text-base);
+    color: var(--color-text-primary);
+    margin: 0.5rem 0;
+    line-height: 1.4;
 }
 
 .product-info .price {
     font-size: var(--fs-xl); 
     font-weight: var(--fw-bold);
+}
+
+/*제어 컴포넌트*/
+.btn-prev, .btn-next {
+    cursor: pointer;
+    background-color: transparent;
+    transition: filter var(--transition-base);
+}
+
+/*배너*/
+.btn-prev:hover, .btn-next:hover {
+    filter: var(--icon-filter-hover); /*화살표 아이콘 호버 효과*/
+}
+
+.pagination li {
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg-primary);
+    cursor: pointer;
+    transition: background-color var(--transition-base);
+}
+
+/*활성화된 페이지 점 스타일*/
+.pagination li.on {
+    background-color: var(--color-text-primary); /*활성화된 점은 검은색*/
 }

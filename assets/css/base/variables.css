@@ -120,7 +120,7 @@
     --icon-delete: url('../../images/icon-delete.svg');
     --icon-plus: url('../../images/icon-plus.svg');
     --icon-plus-line: url('/open-market-project/assets/images/icon-plus-line.svg');
-    --icon-plus-line_disabled: url('/open-market-project/assets/images//icon-plus-line_disabled.svg');
+    --icon-plus-line_disabled: url('/open-market-project/assets/images/icon-plus-line_disabled.svg');
     --icon-minus-line: url('/open-market-project/assets/images/icon-minus-line.svg');
     --icon-minus-line_disabled: url('/open-market-project/assets/images/icon-minus-line_disabled.svg');
     --icon-img: url('../../images/icon-img.svg');
@@ -129,8 +129,6 @@
     --icon-sm: clamp(1.4rem, 2vw, 1.6rem); 
     --icon-md: clamp(2.0rem, 4vw, 2.4rem); /* HODU 메인 아이콘 규격 */
     --icon-lg: clamp(2.4rem, 5vw, 3.2rem);
-
-    --logo-size-signup: 23.0rem; 
 
   /* Icon filter */
     --icon-filter-hover: brightness(0.8); /* 마우스 */
@@ -150,8 +148,6 @@
     --btn-padding-tab-t: 1.8rem;  
     --btn-padding-tab-b: 2.5rem;  
     --btn-padding-h: clamp(1.6rem, 5vw, 4.0rem);
-    --input-height: 5.4rem;
-    --input-padding-x: 1.5rem;
 
     --btn-height-sm: 4.0rem;
     --btn-height-md: 5.4rem;
@@ -177,27 +173,30 @@
     --form-msg-gap: 0.8rem;
     --form-gap: 1.5rem;
     --form-logo-padding-v: 4.0rem;
+    --form-input-height: 5.4rem;
+    --form-input-padding-h: 1.5rem;
     
   /* Form Icons Filter */
     --form-filter-success: invert(48%) sepia(87%) saturate(418%) hue-rotate(84deg) brightness(95%) contrast(88%);
     --form-filter-disabled: grayscale(100%) opacity(0.2);
 
-  /* 7 . Password Field */
+    --form-logo-width: 23.0rem; 
+
+  /* 8 . Password Field */
     --form-pw-dots-fs: 2.4rem; /* 비밀번호 점 크기 */
     --form-pw-dots-ls: 0.4rem; /* 비밀번호 점 간격 */
 
-  /* 8. Transitions */
+  /* 9. Transitions */
     --transition-fast: 0.15s ease;
     --transition-base: 0.2s ease;
 
-  /* 9. Z-Index (레이어 순서 관리) */
+  /* 10. Z-Index (레이어 순서 관리) */
     --z-dropdown: 100;
     --z-sticky: 200;
     --z-modal: 300;
     --z-tooltip: 400;
 
-  /* 10. Legacy (하위 호환성 유지) */
-  /* [추가] 기존에 작성한 코드들이 깨지지 않도록 예전 이름을 새 변수에 매핑 */
+  /* 11. Legacy (하위 호환성 유지) */
     --space-form: var(--form-gap);
     --form-space-msg: var(--form-msg-gap);
 }
