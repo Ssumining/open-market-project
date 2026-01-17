@@ -67,6 +67,7 @@
     border-radius: 0;
     border-top: none;
     margin-top: 0;
+    padding-top: 0;
 }
 
 /* 판매자 탭 활성화 시 구매자 영역 하단 border-radius 제거 */
@@ -170,7 +171,7 @@ label[for="phone-prefix"] {
     font-size: var(--fs-md);
     color: var(--color-text-muted);
     margin-bottom: var(--space-xs);
-    margin-top: 2.0rem;
+    /* margin-top: 2.0rem; */
 }
 
 .input-row {

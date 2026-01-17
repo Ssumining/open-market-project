@@ -1,0 +1,21 @@
+# 의존성 패키지 (용량이 크고 push할 필요 없음)
+node_modules/
+
+# 테스트 결과 및 커버리지 리포트
+coverage/
+
+# OS 및 에디터 설정 파일
+.DS_Store
+.vscode/
+
+# 로그 파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+package-lock.json
+package.json
+babel.config.json
+
+tests
+path.test.js

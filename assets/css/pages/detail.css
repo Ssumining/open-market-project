@@ -11,7 +11,7 @@
 .product-image {
     width: var(--product-img-size);
     height: var(--product-img-size);
-    object-fit: fill;
+    object-fit: cover;
     margin-right: 5.0rem;
 }
 
